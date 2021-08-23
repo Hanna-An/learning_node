@@ -1,4 +1,5 @@
 const main = require('./main.js')
+const car = require('./car.js')
 // const a = require('./main.js')
 // const b = require('./main.js')
 
@@ -6,6 +7,7 @@ const main = require('./main.js')
 
 const apple = new main.Apple()
 console.log(apple.getColor())
+
 
 // console.log(main, a, b)
 
