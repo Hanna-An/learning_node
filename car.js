@@ -1,12 +1,13 @@
 class Car {
-  static wheels = null
+  static wheels = 4
   static doors = null
   static place = null
   static carName = null
   static years = null
 
   static setWheels (wheels) {
-    this.wheels = wheels
+    // this.wheels = wheels
+    return 'wheels - ' + Car.getWheels()
   }
   static getWheels() {
     return this.wheels
@@ -46,13 +47,24 @@ class Car {
           `
   }
 }
-Car.setWheels(3)
-Car.setDoors(4)
-Car.setPlace(5)
-Car.setCarName('toyota')
-Car.setYears(2021)
-console.log(Car.getResult())
+// Car.setWheels(3)
+// console.log('wheels - ' + Car.getWheels())
+// Car.setDoors(4)
+// console.log('doors - ' + Car.getDoors())
+// Car.setPlace(5)
+// console.log('place - ' + Car.getPlace())
+// Car.setCarName('toyota')
+// console.log('name - ' + Car.getCarName())
+// Car.setYears(2021)
+// console.log('year - ' + Car.getYears())
+// console.log(Car.getResult())
 
 module.exports = {
     Car
+    // setWheels,
+    // setDoors: this.setDoors,
+    // setPlace: this.setPlace,
+    // setCarName: this.setCarName,
+    // setYears: this.setYears
+    
 }
