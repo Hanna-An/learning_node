@@ -1,28 +1,38 @@
-const main = require('./main.js')
-const car = require('./car.js')
-// const a = require('./main.js')
-// const b = require('./main.js')
+// console.log(1)
+// // console.log(__dirname)
+// console.log(__dirname);
+// // Prints: /Users/mjr
+// console.log(__filename)
+// // Prints: /Users/mjr
 
-// console.log(main.Apple.getColor())
+// const EventEmitter = require('events');
 
-const apple = new main.Apple()
-console.log(apple.getColor())
+// class MyEmitter extends EventEmitter {}
 
-// const cars = new car.Car()
-// console.log(cars.setWheels())
+// const myEmitter = new MyEmitter();
+// myEmitter.on('event', () => {
+//   console.log('an event occurred!');
+// });
 
-console.log(car.Car.setWheels())
-console.log(car.Car.setDoors())
-console.log(car.Car.setPlace())
-console.log(car.Car.setCarName())
-console.log(car.Car.setYears())
-console.log(car.Car.getResult())
-
-
+// setTimeout(function() {
+//     myEmitter.emit('event');
+// },5000)  
 
 
-// console.log(main, a, b)
+var a = 5;
+setTimeout(function timeout() {
+    console.log(a);
+    a = 10;
+}, 0);
 
-// console.log(6)
-// console.log(process.argv[2]) // достать аргумент
+var p = new Promise(function(resolve, reject) {
+    console.log(a);
+    a = 25;
+    resolve();
+});
 
+p.then(function(){
+    // some code
+});
+
+console.log(a);

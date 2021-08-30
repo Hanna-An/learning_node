@@ -12,6 +12,7 @@ class Apple {
     getColor() {
         return 'green'
     }
+
  }
 module.exports = {
     apple: test,
