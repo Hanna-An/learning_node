@@ -2,12 +2,14 @@
   "name": "node.test",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "examples/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js",
+    "dev:start": "pm2 start native/index.js --watch",
+    "dev:stop": "pm2 stop index",
     "start": ""
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "type": "module"
 }

@@ -1,0 +1,70 @@
+{
+    "title" : "7-day Critical Thinking boost",
+    "image" : "https://brainwell.com/wp-content/uploads/2021/09/127262.1233.jpg",
+    "duration" : 7,
+    "domain_id" : ObjectId("6106c9532d14f3917fce19a1"),
+    "days" : [
+      {
+        "day" : 1,
+        "game_ids" : [
+          ObjectId("50927fb1a85810cb71000009"),
+          ObjectId("51fba8edfe22591f51000009"),
+          ObjectId("53f7a869073be830469c6a07"),
+          ObjectId("546680ce073be8c52b91e9eb")
+        ]
+      },
+      {
+        "day" : 2,
+        "game_ids" : [
+          ObjectId("50b62116a858108f1000005a"),
+          ObjectId("518d147ffe2259c220000014"),
+          ObjectId("520ce1e1fe2259a359000003"),
+          ObjectId("520e0c2efe22590f5e000013")
+        ]
+      },
+      {
+        "day" : 3,
+        "game_ids" : [
+          ObjectId("53f7a71f073be822419c6a09"),
+          ObjectId("53f4ad4f073be8971b9c6a09"),
+          ObjectId("53f7a9ca073be885419c6a17"),
+          ObjectId("5240519cfe2259df7c8b459d")
+        ]
+      },
+      {
+        "day" : 4,
+        "game_ids" : [
+          ObjectId("5459294c073be82c3667651f"),
+          ObjectId("50927fb1a85810cb71000009"),
+          ObjectId("52821f28fe2259095d8b47dc"),
+          ObjectId("521c9fecfe22595722000026")
+        ]
+      },
+      {
+        "day" : 5,
+        "game_ids" : [
+          ObjectId("51fba8edfe22591f51000009"),
+          ObjectId("53f7a869073be830469c6a07"),
+          ObjectId("518d147ffe2259c220000014"),
+          ObjectId("545923f1073be88a34676521")
+        ]
+       },
+       {
+        "day" : 6,
+        "game_ids" : [
+            ObjectId("50b62116a858108f1000005a"),
+            ObjectId("53f7a71f073be822419c6a09"),
+            ObjectId("50c9e2afa85810cc71000186"),
+            ObjectId("53fb7610073be88c7045ac8e")
+        ]
+       },
+       {
+        "day" : 7,
+        "game_ids" : [
+            ObjectId("520ce1e1fe2259a359000003"),
+            ObjectId("53f4ad4f073be8971b9c6a09"),
+            ObjectId("50c9e2afa85810cc71000186"),
+            ObjectId("517166fdfe2259f03e000027")
+        ]
+       }
+    
