@@ -75,8 +75,15 @@ const server = http.createServer((req, res) => {
                     try {
                         req.on('data', chunk => {
                             let data = JSON.parse(chunk)
+                            if (data.name === '') {
+                                console.error('поле не должно быть пустым')
+                            }
+                            if(data.category === '') {
+                                console.error('поле не должно быть пустым')
+                            }
                             let dir = './temp'
                             console.log(data)
+
                             if (!fs.existsSync(dir)) {
                                 fs.mkdirSync(dir)
                             }
