@@ -23,18 +23,7 @@ const server = http.createServer((req, res) => {
                             if (!fs.existsSync(dir)) {
                                 fs.mkdirSync(dir)
                             }
-                            let content = '111'
-                            let new_content = '222'
-                            fs.writeFileSync(dir + '/' + data.category + '.txt', content)
-                            if (data.category === 'admin') {
-                                fs.appendFileSync('./temp/admin.txt', '\n' + new_content, (err))
-                            } else if (data.category === 'user') {
-                                fs.appendFileSync('./temp/user.txt', '\n' + new_content, (err))
-                            } else if (data.category === 'master') {
-                                fs.appendFileSync('./temp/master.txt', '\n' + new_content, (err))
-                            } else {
-                                console.error(err)
-                            }
+                            fs.appendFileSync(`./temp/${data.category}.txt`, data.name + '\n')
                         })
                         req.on('end', () => {
                             }
