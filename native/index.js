@@ -25,35 +25,15 @@ const server = http.createServer((req, res) => {
                             }
                             let content = '111'
                             let new_content = '222'
+                            fs.writeFileSync(dir + '/' + data.category + '.txt', content)
                             if (data.category === 'admin') {
-                                console.log(fs.accessSync('./temp/admin.txt'))
-                                fs.writeFileSync(dir + '/' + data.category + '.txt', content)
-                                fs.appendFileSync('./temp/admin.txt', '\n' + new_content, (err) => {
-                                    if (err) {
-                                        console.error(err)
-                                        return
-                                    }
-                                })
-                            }
-                            if (data.category === 'user') {
-                                console.log(fs.accessSync('./temp/user.txt'))
-                                fs.writeFileSync(dir + '/' + data.category + '.txt', content)
-                                fs.appendFileSync('./temp/user.txt', '\n' + new_content, (err) => {
-                                    if (err) {
-                                        console.error(err)
-                                        return
-                                    }
-                                })
-                            }
-                            if (data.category === 'master') {
-                                console.log(fs.accessSync('./temp/master.txt'))
-                                fs.writeFileSync(dir + '/' + data.category + '.txt', content)
-                                fs.appendFileSync('./temp/master.txt', '\n' + new_content, (err) => {
-                                    if (err) {
-                                        console.error(err)
-                                        return
-                                    }
-                                })
+                                fs.appendFileSync('./temp/admin.txt', '\n' + new_content, (err))
+                            } else if (data.category === 'user') {
+                                fs.appendFileSync('./temp/user.txt', '\n' + new_content, (err))
+                            } else if (data.category === 'master') {
+                                fs.appendFileSync('./temp/master.txt', '\n' + new_content, (err))
+                            } else {
+                                console.error(err)
                             }
                         })
                         req.on('end', () => {
