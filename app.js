@@ -70,19 +70,12 @@ MongoClient.connect(
 //         }
 //     )
 // })
-app.use(express.json())
 
 app.post('/api/news', async (req, res) => {
     let data = req.body
-    let b = await db.collection('news').insertOne(data, (err, result) => {
-        if (err) {
-            console.log('Unable insert news: ', err)
-            throw err
-        }
-        // console.log(result)
-        res.status(201).type('application/json')
-        res.send({id: result.insertedId})
-    })
+    let b = await db.collection('news').insertOne(data)
+    res.status(201).type('application/json')
+    res.send({id: b.insertedId})
 })
 
 app.get('/api/news', async (req, res) => {
@@ -105,33 +98,24 @@ app.put('/api/news/:title', async (req, res) => {
     const titleNews = req.params.title
     console.log(titleNews)
     let data = req.body
-    let b = await db.collection('news').update({"title": titleNews}, { $set: data }, (err, result) => {
-        if (err) {
-            console.log('Unable update news: ', err)
-            throw err
-        }
-        // console.log(result)
-        res.status(201).type('application/json')
-        res.send({status:'success'})
-    })
+    let b = await db.collection('news').update({"title": titleNews}, { $set: data })
+    res.status(201).type('application/json')
+    res.send({status:'success'})
 })
 
 app.delete('/api/news/:title', async (req, res) => {
     const titleNews = req.params.title
     console.log(titleNews)
-    let b = await db.collection('news').deleteMany({"title": titleNews}, (err, result) => {
-        if (err) {
-            console.log('Unable delete news: ', err)
-            throw err
-        }
+    let b = await db.collection('news').deleteMany({"title": titleNews})
         res.status(200).type('application/json')
         res.send({status:'success'})
-    })
 })
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 app.use(express.static(path.join(__dirname ,'assets')))
+
+app.use(express.json())
 
 app.use((req, res, next) => {
     res.status(404).type('application/json')
