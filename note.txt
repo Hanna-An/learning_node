@@ -1,0 +1,21 @@
+app.get('/home', async (req, res) => {
+    let b = await db.collection('packs').findOne()
+    console.log(b)
+    res.status(200).type('text/plain')
+    res.send('Home page')
+})
+
+app.get('/about', (req, res) => {
+    res.status(200).type('text/plain')
+    res.send('About page')
+})
+
+app.post('/api/admin', (req, res) => {
+    res.status(200).type('text/plain')
+    res.send('Create admin request')
+})
+
+app.post('/api/user', (req, res) => {
+    res.status(200).type('text/plain')
+    res.send('Create user request')
+})
