@@ -1,6 +1,8 @@
 import express from 'express'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import handlebars from 'express-handlebars'
+
 
 const app = express()
 const host = '127.0.0.1'
@@ -111,11 +113,22 @@ app.delete('/api/news/:title', async (req, res) => {
         res.send({status:'success'})
 })
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-app.use(express.static(path.join(__dirname ,'assets')))
+// const __filename = fileURLToPath(import.meta.url)
+// const __dirname = path.dirname(__filename)
+// app.use(express.static(path.join(__dirname ,'assets')))
 
 app.use(express.json())
+
+app.engine(
+    'handlebars',
+    handlebars({ defaultLayout: 'main' })
+)
+app.set('views', './views')
+app.set('view engine', 'handlebars')
+
+app.get('/', (req, res) => {
+    res.render('home', { title: 'some' })
+})
 
 app.use((req, res, next) => {
     res.status(404).type('application/json')
