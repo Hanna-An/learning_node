@@ -19,3 +19,65 @@ app.post('/api/user', (req, res) => {
     res.status(200).type('text/plain')
     res.send('Create user request')
 })
+
+
+
+
+
+     // client.close()
+
+        // db.collection('artists').findOne(), (err, result) => {
+        //     if (err) {
+        //         console.log('Unable delete user: ', err)
+        //         throw err
+        //     }
+        // }
+
+        // db.collection('artists').find().limit(5)
+
+        // db.collection('artists').find().sort(1)  //?
+
+        // db.collection('artists').deleteOne({ id: 3 }, (err, result) => {
+        //     if (err) {
+        //         console.log('Unable delete user: ', err)
+        //         throw err
+        //     }
+        // })
+
+        // db.collection('artists').deleteMany({ id: 3, id: 4 }, (err, result) => {
+        //     if (err) {
+        //         console.log('Unable delete user: ', err)
+        //         throw err
+        //     }
+        // })
+
+        // db.collection('artists').find({"day": 1}).count();
+
+
+    }
+)
+
+
+
+// app.get('/', (req, res) => {
+//    request(
+//         'http://example.com/api',
+//         (err, response, body) => {
+//             if (err) return res.status(500).send({ message: err })
+//
+//             return res.send(body)
+//         }
+//     )
+// })
+
+
+// app.get('/', (req, res) => {
+//     res.render('home', {
+//         title: 'Greetings form Handlebars',
+//         advantages: ['simple', 'flexible', 'powerful'],
+//     })
+// })
+
+
+
+

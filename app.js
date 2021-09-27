@@ -3,7 +3,6 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import handlebars from 'express-handlebars'
 
-
 const app = express()
 const host = '127.0.0.1'
 const port = 3000
@@ -11,7 +10,6 @@ app.set('host', host)
 app.set('port', port)
 
 import {MongoClient} from 'mongodb'
- // mongo = require('mongodb').MongoClient
 let db = null
 
 MongoClient.connect(
@@ -24,117 +22,82 @@ MongoClient.connect(
 
         console.log('Connected')
         db = client.db('test')
-        // console.
         let a = await db.collection('artists').findOne({})
         console.log(a)
-        // client.close()
 
-        // db.collection('artists').findOne(), (err, result) => {
-        //     if (err) {
-        //         console.log('Unable delete user: ', err)
-        //         throw err
-        //     }
-        // }
+        app.use(express.json())
 
-        // db.collection('artists').find().limit(5)
+        app.post('/api/news', async (req, res) => {
+            let data = req.body
+            let b = await db.collection('news').insertOne(data)
+            res.status(201).type('application/json')
+            res.send({id: b.insertedId})
+        })
 
-        // db.collection('artists').find().sort(1)  //?
+        app.get('/api/news', async (req, res) => {
+            let arr = await db.collection('news').find().toArray()
+            console.log(arr)
+            res.status(200).type('application/json')
+            res.send(arr)
+        })
 
-        // db.collection('artists').deleteOne({ id: 3 }, (err, result) => {
-        //     if (err) {
-        //         console.log('Unable delete user: ', err)
-        //         throw err
-        //     }
-        // })
+        app.get('/api/news/:title', async (req, res) => {
+            const titleNews = req.params.title
+            console.log(titleNews)
+            let b = await db.collection('news').find({"title": titleNews}).toArray()
+            console.log(b)
+            res.status(200).type('application/json')
+            res.send(b)
+        })
 
-        // db.collection('artists').deleteMany({ id: 3, id: 4 }, (err, result) => {
-        //     if (err) {
-        //         console.log('Unable delete user: ', err)
-        //         throw err
-        //     }
-        // })
+        app.put('/api/ews/:title', async (req, res) => {
+            const titleNews = req.params.title
+            console.log(titleNews)
+            let data = req.body
+            let b = await db.collection('news').update({"title": titleNews}, {$set: data})
+            res.status(201).type('application/json')
+            res.send({status: 'success'})
+        })
 
-        // db.collection('artists').find({"day": 1}).count();
+        app.delete('/api/news/:title', async (req, res) => {
+            const titleNews = req.params.title
+            console.log(titleNews)
+            let b = await db.collection('news').deleteMany({"title": titleNews})
+            res.status(200).type('application/json')
+            res.send({status: 'success'})
+        })
 
+        const __filename = fileURLToPath(import.meta.url)
+        const __dirname = path.dirname(__filename)
+        app.use(express.static(path.join(__dirname, 'views')))
 
-    }
-)
+// app.use(express.json())
 
+        app.engine(
+            'handlebars',
+            handlebars({defaultLayout: 'main'})
+        )
+        app.set('views', './views')
+        app.set('view engine', 'handlebars')
 
+        app.get('/', async (req, res) => {
+            let arr = await db.collection('news').find().toArray()
+            res.render('home', {title: 'news', news: arr})
+        })
 
-// app.get('/', (req, res) => {
-//    request(
-//         'http://example.com/api',
-//         (err, response, body) => {
-//             if (err) return res.status(500).send({ message: err })
-//
-//             return res.send(body)
-//         }
-//     )
-// })
+        app.get('/', (req, res) => {
+            res.render('home', {
+                title: 'Greetings form Handlebars',
+                content: 'Description how to use it handlebars',
+            })
+        })
 
-app.post('/api/news', async (req, res) => {
-    let data = req.body
-    let b = await db.collection('news').insertOne(data)
-    res.status(201).type('application/json')
-    res.send({id: b.insertedId})
-})
+        app.use((req, res, next) => {
+            res.status(404).type('application/json')
+            res.send('Not found')
+        })
 
-app.get('/api/news', async (req, res) => {
-    let arr = await db.collection('news').find().toArray()
-    console.log(arr)
-    res.status(200).type('application/json')
-    res.send(arr)
-})
-
-app.get('/api/news/:title', async (req, res) => {
-    const titleNews = req.params.title
-    console.log(titleNews)
-    let b = await db.collection('news').find({"title": titleNews}).toArray()
-    console.log(b)
-    res.status(200).type('application/json')
-    res.send(b)
-})
-
-app.put('/api/news/:title', async (req, res) => {
-    const titleNews = req.params.title
-    console.log(titleNews)
-    let data = req.body
-    let b = await db.collection('news').update({"title": titleNews}, { $set: data })
-    res.status(201).type('application/json')
-    res.send({status:'success'})
-})
-
-app.delete('/api/news/:title', async (req, res) => {
-    const titleNews = req.params.title
-    console.log(titleNews)
-    let b = await db.collection('news').deleteMany({"title": titleNews})
-        res.status(200).type('application/json')
-        res.send({status:'success'})
-})
-
-// const __filename = fileURLToPath(import.meta.url)
-// const __dirname = path.dirname(__filename)
-// app.use(express.static(path.join(__dirname ,'assets')))
-
-app.use(express.json())
-
-app.engine(
-    'handlebars',
-    handlebars({ defaultLayout: 'main' })
-)
-app.set('views', './views')
-app.set('view engine', 'handlebars')
-
-app.get('/', (req, res) => {
-    res.render('home', { title: 'some' })
-})
-
-app.use((req, res, next) => {
-    res.status(404).type('application/json')
-    res.send('Not found')
-})
-
-app.listen(port, host, function () {
-    console.log(`Server listens http://${host}:${port}`)
-})
+        app.listen(port, host, function () {
+            console.log(`Server listens http://${host}:${port}`)
+        })
+    })
