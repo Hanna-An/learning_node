@@ -1,0 +1,53 @@
+<h1>{{{title}}}</h1>
+
+{{#if cars}}
+    <ul>
+        {{#each cars}}
+            <h3><li>brand: {{this.name}}</li></h3>
+            <p>
+                model: {{model}}
+            </p>
+            <p>
+                generation: {{generation}}
+            </p>
+            <p>
+                mileage: {{mileage}}
+            </p>
+            <p>
+                transmission: {{transmission}}
+            </p>
+            <p>
+                volume: {{volume}}
+            </p>
+            <p>
+                engine: {{engine}}
+            </p>
+            <p>
+                body: {{body}}
+            </p>
+            <p>
+                color: {{color}}
+            </p>
+            <p>
+                price: {{price}}
+            </p>
+            <p>
+                currency: {{currency}}
+            </p>
+            <p>
+                country: {{country}}
+            </p>
+            <p>
+                image: {{image}}
+            </p>
+            <p>
+                city: {{city}}
+            </p>
+            <p>
+               year: {{yearMonthDayUTC}}
+            </p>
+
+        {{/each}}
+    </ul>
+{{/if}}
+

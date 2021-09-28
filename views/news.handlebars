@@ -1,0 +1,15 @@
+<h1>{{{title}}}</h1>
+
+{{#if news}}
+    <ul>
+        {{#each news}}
+            <li>{{this.title}}</li>
+            <p>
+                {{description}}
+            </p>
+        {{/each}}
+    </ul>
+{{/if}}
+
+
+
