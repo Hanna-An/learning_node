@@ -1,7 +1,7 @@
 import express from 'express'
 import path from 'path'
 import { fileURLToPath } from 'url'
-// import handlebars from 'express-handlebars'
+import handlebars from 'express-handlebars'
 
 
 
@@ -11,8 +11,10 @@ const port = 3000
 app.set('host', host)
 app.set('port', port)
 
-import router from './routes/index.js'
-app.use('/api', router)
+import cars from './routes/cars.js'
+app.use('/api', cars)
+import profile from './routes/profile.js'
+app.use('/', profile)
 
 import {MongoClient} from 'mongodb'
 let db = null
@@ -27,6 +29,7 @@ MongoClient.connect(
 
         console.log('Connected')
         db = client.db('test')
+        app.db = db
         let a = await db.collection('cars').findOne({})
         console.log(a)
 
@@ -115,32 +118,33 @@ MongoClient.connect(
 
         const __filename = fileURLToPath(import.meta.url)
         const __dirname = path.dirname(__filename)
+
         app.use(express.static(path.join(__dirname, 'views')))
 
 
-        // app.engine(
-        //     'handlebars',
-        //     handlebars({defaultLayout: 'main'})
-        // )
-        // app.set('views', './views')
-        // app.set('view engine', 'handlebars')
-        //
-        // app.get('/cars', async (req, res) => {
-        //     let arr = await db.collection('cars').find().toArray()
-        //     res.render('cars', {title: 'cars', cars: arr})
-        // })
-        //
-        // app.get('/cars', async (req, res) => {
-        //     let arr = await db.collection('cars').find().toArray()
-        //     res.render('cars', {title: 'cars', cars: arr})
-        // })
-        //
-        // app.get('/', (req, res) => {
-        //     res.render('home', {
-        //         title: 'Greetings form Handlebars',
-        //         content: 'Description how to use it handlebars',
-        //     })
-        // })
+        app.engine(
+            'handlebars',
+            handlebars({defaultLayout: 'main'})
+        )
+        app.set('views', './views')
+        app.set('view engine', 'handlebars')
+
+        app.get('/cars', async (req, res) => {
+            let arr = await db.collection('cars').find().toArray()
+            res.render('cars', {title: 'cars', cars: arr})
+        })
+
+        app.get('/cars', async (req, res) => {
+            let arr = await db.collection('cars').find().toArray()
+            res.render('cars', {title: 'cars', cars: arr})
+        })
+
+        app.get('/', (req, res) => {
+            res.render('home', {
+                title: 'Greetings form Handlebars',
+                content: 'Description how to use it handlebars',
+            })
+        })
 
 
         app.use((req, res, next) => {
