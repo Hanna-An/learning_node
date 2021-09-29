@@ -80,4 +80,89 @@ app.post('/api/user', (req, res) => {
 
 
 
+// app.post('/api/news', async (req, res) => {
+        //     let data = req.body
+        //     let b = await db.collection('news').insertOne(data)
+        //     res.status(201).type('application/json')
+        //     res.send({id: b.insertedId})
+        // })
+        //
+        // app.get('/api/news', async (req, res) => {
+        //     let arr = await db.collection('news').find().toArray()
+        //     console.log(arr)
+        //     res.status(200).type('application/json')
+        //     res.send(arr)
+        // })
+        //
+        // app.get('/api/news/:title', async (req, res) => {
+        //     const titleNews = req.params.title
+        //     console.log(titleNews)
+        //     let b = await db.collection('news').find({"title": titleNews}).toArray()
+        //     console.log(b)
+        //     res.status(200).type('application/json')
+        //     res.send(b)
+        // })
+        //
+        // app.put('/api/ews/:title', async (req, res) => {
+        //     const titleNews = req.params.title
+        //     console.log(titleNews)
+        //     let data = req.body
+        //     let b = await db.collection('news').update({"title": titleNews}, {$set: data})
+        //     res.status(201).type('application/json')
+        //     res.send({status: 'success'})
+        // })
+        //
+        // app.delete('/api/news/:title', async (req, res) => {
+        //     const titleNews = req.params.title
+        //     console.log(titleNews)
+        //     let b = await db.collection('news').deleteMany({"title": titleNews})
+        //     res.status(200).type('application/json')
+        //     res.send({status: 'success'})
+        // })
+
+
+        // app.post('/api/cars', async (req, res) => {
+        //     let data = req.body
+        //     let b = await db.collection('cars').insertOne(data)
+        //     res.status(201).type('application/json')
+        //     res.send({id: b.insertedId})
+        // })
+        //
+        // app.get('/api/cars', async (req, res) => {
+        //     let arr = await db.collection('cars').find().toArray()
+        //     console.log(arr)
+        //     res.status(200).type('application/json')
+        //     res.send(arr)
+        // })
+        //
+        // app.get('/api/cars/:title', async (req, res) => {
+        //     const titleCars = req.params.title
+        //     console.log(titleCars)
+        //     let b = await db.collection('cars').find({"title": titleCars}).toArray()
+        //     console.log(b)
+        //     res.status(200).type('application/json')
+        //     res.send(b)
+        // })
+        //
+        // app.put('/api/cars/:title', async (req, res) => {
+        //     const titleCars = req.params.title
+        //     console.log(titleCars)
+        //     let data = req.body
+        //     let b = await db.collection('cars').update({"title": titleCars}, {$set: data})
+        //     res.status(201).type('application/json')
+        //     res.send({status: 'success'})
+        // })
+        //
+        // app.delete('/api/cars/:title', async (req, res) => {
+        //     const titleCars = req.params.title
+        //     console.log(titleCars)
+        //     let b = await db.collection('cars').deleteMany({"title": titleCars})
+        //     res.status(200).type('application/json')
+        //     res.send({status: 'success'})
+        // })
+
+
+
+
+
 

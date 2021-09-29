@@ -16,13 +16,13 @@ profile.route('/profile')
     .post(upload.single("avatar"), (req, res) => {
         const tempPath = req.file.path
         console.log(req.file)
-        const targetPath = path.join('./uploads', req.file.originalname)
+        const targetPath = path.join('./public/uploads', req.file.originalname)
 
         // if (path.extname(req.file.originalname).toLowerCase() === ".png") {
             fs.rename(tempPath, targetPath, err => {
                 if (err) return handleError(err, res)
 
-                res.render('profile', {title: 'Profile'})
+                res.render('profile', {title: 'Profile', image: '/uploads/' + req.file.originalname})
             })
         // } else {
         //     fs.unlink(tempPath, err => {
