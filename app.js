@@ -2,8 +2,8 @@ import express from 'express'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import handlebars from 'express-handlebars'
-import cars from './routes/cars.js'
-import profile from './routes/profile.js'
+import apiRoutes from './routes/api/index.js'
+import webRoutes from './routes/web/index.js'
 import {MongoClient} from 'mongodb'
 
 const app = express()
@@ -21,13 +21,14 @@ MongoClient.connect(
         }
         console.log('Connected')
         db = client.db('test')
-        app.db = db
-        let a = await db.collection('cars').findOne({})
-        console.log(a)
+        global.db = db
     })
 
 app.set('host', host)
 app.set('port', port)
+
+app.use('/api', apiRoutes)
+app.use('/', webRoutes)
 
 app.use(express.json())
 
@@ -42,26 +43,6 @@ app.engine(
 )
 app.set('views', './views')
 app.set('view engine', 'handlebars')
-
-app.use('/api', cars)
-app.use('/', profile)
-
-app.get('/cars', async (req, res) => {
-    let arr = await db.collection('cars').find().toArray()
-    res.render('cars', {title: 'cars', cars: arr})
-})
-
-app.get('/cars', async (req, res) => {
-    let arr = await db.collection('cars').find().toArray()
-    res.render('cars', {title: 'cars', cars: arr})
-})
-
-app.get('/', (req, res) => {
-    res.render('home', {
-        title: 'Greetings form Handlebars',
-        content: 'Description how to use it handlebars',
-    })
-})
 
 app.use((req, res, next) => {
     res.status(404).type('application/json')
