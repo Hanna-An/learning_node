@@ -9,6 +9,7 @@ webRoutes.get('/', (req, res) => {
     res.render('home', {
         title: 'Greetings form Handlebars',
         content: 'Description how to use it handlebars',
+        style: 'style.css',
     })
 })
 
@@ -18,15 +19,34 @@ webRoutes.get('/cars', async (req, res) => {
 })
 
 webRoutes.get('/news', async (req, res) => {
-    let arr = await global.db.collection('news').find().toArray()
-    res.render('news', {title: 'news', news: arr})
+    const limit = 2
+    let offset = 0
+    if (req.query.page) {
+        offset = req.query.page * limit - 2
+    }
+    let arr = await global.db.collection('news').find().skip(offset).limit(limit).toArray()
+    let count = await global.db.collection('news').count()
+    let pages = parseInt(count / limit) + 1
+    let arrPages = []
+    for (let i = 0; i < pages; i++) {
+        arrPages.push(i + 1)
+    }
+    res.render('news', {title: 'news', news: arr, pages: arrPages})
+})
+
+webRoutes.get('/category', async (req, res) => {
+    let category = await global.db.collection('categories').find()
+    if (category) {
+        res.render('category')
+    } else {
+        throw new Error('404')
+    }
 })
 
 webRoutes.get('/category/:key', async (req, res) => {
     let category = await global.db.collection('categories').findOne({key: req.params.key})
-    console.log(category)
     if (category) {
-        res.render('category', {title: category.title})
+        res.render('category/_key', {title: category.title})
     } else {
         throw new Error('404')
     }
