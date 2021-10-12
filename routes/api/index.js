@@ -12,4 +12,13 @@ apiRoutes.get('/news', async (req, res) => {
     res.render('news', {title: 'news', news: arr})
 })
 
+apiRoutes.get('/category', async (req, res) => {
+    let category = await global.db.collection('categories').find()
+    if (category) {
+        res.render('category')
+    } else {
+        throw new Error('404')
+    }
+})
+
 export default apiRoutes

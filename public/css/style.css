@@ -1,0 +1,80 @@
+* a {
+    text-decoration: none;
+}
+body {
+    margin: 0;
+    padding: 0;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.4;
+}
+:root {
+    --main-color: yellow;
+}
+.header-item {
+    list-style-type: none;
+    display: inline;
+}
+.header-block {
+    background: green;
+    padding: 20px;
+    text-align: right;
+}
+.menu-item {
+    color: black;
+    margin: 0 15px 0 0;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 15px;
+}
+.menu-item:hover {
+    background-color: var(--main-color);
+}
+.menu-item-category > ul > li:hover a {
+    color: green;
+
+}
+ul {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+ul li {display: inline-block;}
+ul li:hover {background: yellow;}
+ul li:hover ul {display: block;}
+ul li ul {
+    text-align: center;
+    position: absolute;
+    margin-left: 1281px;
+    width: 118px;
+    /*display: none;*/
+}
+ul li ul li {
+    background: green;
+    display: block;
+}
+ul li ul li:hover {
+    background: yellow;
+}
+.news_title {
+    margin: 20px 20px 0;
+    font-size: 30px;
+}
+.news_description {
+    margin: 10px;
+    font-size: 20px;
+}
+
+.div.image-block > a > img {
+    width: 25%;
+}
+
+.name_category {
+    width: 24%;
+    text-align: center;
+    display: inline-block;
+}
+.title {
+    font-size: 15px;
+    display: block;
+}

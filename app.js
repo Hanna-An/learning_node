@@ -5,12 +5,30 @@ import handlebars from 'express-handlebars'
 import apiRoutes from './routes/api/index.js'
 import webRoutes from './routes/web/index.js'
 import {MongoClient} from 'mongodb'
+import session from 'express-session'
+
 
 const app = express()
 const host = '127.0.0.1'
 const port = 3000
 
 let db = null
+
+app.use(
+    session({
+        secret: '123',
+        saveUninitialized: true,
+    })
+)
+
+app.use(express.static('public'))
+
+app.use((req, res, next) => {
+    // console.log(__filename + req.originalUrl)
+    // console.log(host + ':' + port + req.originalUrl)
+    console.log('http://localhost:3000' + req.originalUrl)
+    next()
+})
 
 MongoClient.connect(
     'mongodb://localhost:27017',

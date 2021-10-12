@@ -1,15 +1,27 @@
+<link rel="stylesheet" href="css/style.css">
+
+<div>
+    <a href="/" class="main">Главная</a>
+    <span class="main"> -> Новости</span>
+<!--    <a href="/news1" class="main"> -> {{this.title}}</a>-->
+</div>
+
 <h1>{{{title}}}</h1>
 
 {{#if news}}
     <ul>
         {{#each news}}
-            <li>{{this.title}}</li>
-            <p>
+            <li class="news_title">{{this.title}}</li>
+            <p class="news_description">
                 {{description}}
             </p>
         {{/each}}
     </ul>
 {{/if}}
 
-
+<div>
+    {{#each pages}}
+        <a href="/news?page={{this}}"> {{this}}</a>
+    {{/each}}
+</div>
 
