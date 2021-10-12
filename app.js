@@ -21,7 +21,6 @@ app.use(
     })
 )
 
-
 app.use(express.static('public'))
 
 app.use((req, res, next) => {
