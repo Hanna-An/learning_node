@@ -1,13 +1,13 @@
 <div>
     <a href="/" class="main">Главная</a>
-    <span class="main"> -> Новости</span>
+    <span class="main"> -> Статьи</span>
 </div>
 
 <h1>{{{title}}}</h1>
 
-{{#if news}}
+{{#if articles}}
     <ul>
-        {{#each news}}
+        {{#each articles}}
             <li class="news_title">
                 <a href="{{this.url}}">{{this.title}}</a>
             </li>
@@ -20,7 +20,7 @@
 
 <div>
     {{#each pages}}
-        <a href="/news?page={{this}}"> {{this}}</a>
+        <a href="/articles?page={{this}}"> {{this}}</a>
     {{/each}}
 </div>
 

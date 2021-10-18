@@ -6,6 +6,11 @@ import apiRoutes from './routes/api/index.js'
 import webRoutes from './routes/web/index.js'
 import {MongoClient} from 'mongodb'
 import session from 'express-session'
+import passport from 'passport'
+// import bodyParser from 'body-parser'
+
+import {Strategy} from 'passport-local'
+
 
 
 const app = express()
@@ -20,15 +25,45 @@ app.use(
         saveUninitialized: true,
     })
 )
+app.use(passport.initialize())
+app.use(passport.session())
+app.use(passport.initialize())
+app.use(passport.session())
+
+passport.use(
+    new Strategy((user, password, done) => {
+        if (user !== 'test_user')
+            return done(null, false, {
+                message: 'User not found',
+            })
+        else if (password !== 'test_password')
+            return done(null, false, {
+                message: 'Wrong password',
+            })
+
+        return done(null, { id: 1, name: 'Test', age: 21 })
+    })
+)
+
 
 app.use(express.static('public'))
 
 app.use((req, res, next) => {
-    // console.log(__filename + req.originalUrl)
-    // console.log(host + ':' + port + req.originalUrl)
-    console.log('http://localhost:3000' + req.originalUrl)
-    next()
+    console.log(req._parsedUrl.path)
+    if (req.user) {
+        next()
+    } else {
+        if (req._parsedUrl.path === '/login') {
+            next()
+        } else {
+            next()
+            // res.redirect('/login')
+        }
+    }
 })
+
+passport.serializeUser((user, done) => done(null, user))
+passport.deserializeUser((user, done) => done(null, user))
 
 MongoClient.connect(
     'mongodb://localhost:27017',
@@ -49,6 +84,10 @@ app.use('/api', apiRoutes)
 app.use('/', webRoutes)
 
 app.use(express.json())
+app.use(express.urlencoded())
+// app.use(express.bodyParser())
+
+
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
