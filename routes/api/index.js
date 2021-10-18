@@ -12,6 +12,11 @@ apiRoutes.get('/news', async (req, res) => {
     res.render('news', {title: 'news', news: arr})
 })
 
+apiRoutes.get('/articles', async (req, res) => {
+    let arr = await global.db.collection('articles').find().toArray()
+    res.render('articles', {title: 'articles', articles: arr})
+})
+
 apiRoutes.get('/category', async (req, res) => {
     let category = await global.db.collection('categories').find()
     if (category) {

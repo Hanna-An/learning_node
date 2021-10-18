@@ -1,0 +1,40 @@
+<form id="regForm" method="POST" action="/login">
+    <h1>Register:</h1>
+    <div>Contact Info:
+        <p><input type="email" placeholder="E-mail..." name="email"></p>
+        <p><input type="password" name="password"></p>
+    </div>
+
+    <div style="overflow:auto;">
+        <div style="float:right;">
+            <button id="prevBtn">Check</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    let telRe = /\+37529[0-9+]{7}/;
+    let emailRe = /^[\w-\.]+@[\w-]+\.[a-z]{2,4}$/i;
+
+    function checkForm(){
+        let errorPhoneMessage = "";
+        let errorEmailMessage = "";
+        let okMessage = "ok";
+        let form = document.getElementById('regForm')
+        let telValue = form.phone.value;
+        let emailValue = form.email.value;
+        if ( ! telRe.test(telValue)){
+            errorPhoneMessage = "Error: wrong phone";
+        }
+        if ( ! emailRe.test(emailValue)){
+            errorEmailMessage = "Error: wrong email";
+        }
+        if (errorEmailMessage){
+            alert(errorEmailMessage);
+        } else if (errorPhoneMessage){
+            alert(errorPhoneMessage);
+        } else {
+            alert(okMessage);
+        }
+    }
+</script>
