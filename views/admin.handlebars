@@ -1,0 +1,32 @@
+<div>
+    <a href="/" class="main">Главная</a>
+    <span class="main"> -> Админ</span>
+</div>
+
+<h1>{{{title}}}</h1>
+
+{{#if admin}}
+    <ul>
+        {{#each admin}}
+            <li class="news_title">
+                <a href="{{this.url}}">{{this.title}}</a>
+            </li>
+        {{/each}}
+    </ul>
+{{/if}}
+
+<div>
+    {{#each pages}}
+        <a href="/admin?page={{this}}"> {{this}}</a>
+    {{/each}}
+</div>
+
+<div>
+    <a href="/admin/news">Новости</a>
+</div>
+<div>
+    <a href="/admin/articles">Статьи</a>
+</div>
+<div>
+    <a href="/admin/category">Категории</a>
+</div>

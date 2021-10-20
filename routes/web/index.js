@@ -143,5 +143,95 @@ webRoutes.post('/login', async (req, res) => {
     res.send('ok')
 })
 
+webRoutes.get('/admin', async (req, res) => {
+    let arr = await global.db.collection('news').find().toArray()
+    arr.forEach(function (item) {
+        item.url = req._parsedOriginalUrl.pathname + '/' + item.key
+    })
+    res.render('admin', {title: 'admin'})
+})
+
+webRoutes.get('/admin/news', async (req, res) => {
+    let arr = await global.db.collection('news').find().toArray()
+    arr.forEach(function (item) {
+        item.url = req._parsedOriginalUrl.pathname + '/' + item.key
+    })
+    res.render('admin/news', {title: 'admin', news: arr})
+})
+
+webRoutes.get('/admin/news/:key', async (req, res) => {
+    let news = await global.db.collection('news').findOne({key: req.params.key})
+    if (news) {
+        res.render('admin/news/_key', {news: news})
+    } else {
+        throw new Error('404')
+    }
+})
+
+webRoutes.get('/admin/news/:key/delete', async (req, res) => {
+    await global.db.collection('news').deleteOne({key: req.params.key})
+    res.redirect('/admin/news')
+})
+
+webRoutes.get('/admin', async (req, res) => {
+    let arr = await global.db.collection('articles').find().toArray()
+    arr.forEach(function (item) {
+        item.url = req._parsedOriginalUrl.pathname + '/' + item.key
+    })
+    res.render('admin', {title: 'admin'})
+})
+
+webRoutes.get('/admin/articles', async (req, res) => {
+    let arr = await global.db.collection('articles').find().toArray()
+    arr.forEach(function (item) {
+        item.url = req._parsedOriginalUrl.pathname + '/' + item.key
+    })
+    res.render('admin/articles', {title: 'admin', articles: arr})
+})
+
+webRoutes.get('/admin/articles/:key', async (req, res) => {
+    let articles = await global.db.collection('articles').findOne({key: req.params.key})
+    if (articles) {
+        res.render('admin/articles/_key', {articles: articles})
+    } else {
+        throw new Error('404')
+    }
+})
+
+webRoutes.get('/admin/articles/:key/delete', async (req, res) => {
+    await global.db.collection('articles').deleteOne({key: req.params.key})
+    res.redirect('/admin/articles')
+})
+
+webRoutes.get('/admin', async (req, res) => {
+    let arr = await global.db.collection('categories').find().toArray()
+    arr.forEach(function (item) {
+        item.url = req._parsedOriginalUrl.pathname + '/' + item.key
+    })
+    res.render('admin', {title: 'admin'})
+})
+
+webRoutes.get('/admin/category', async (req, res) => {
+    let arr = await global.db.collection('categories').find().toArray()
+    arr.forEach(function (item) {
+        item.url = req._parsedOriginalUrl.pathname + '/' + item.key
+    })
+    res.render('admin/category', {title: 'admin', category: arr})
+})
+
+webRoutes.get('/admin/category/:key', async (req, res) => {
+    let category = await global.db.collection('categories').findOne({key: req.params.key})
+    if (category) {
+        res.render('admin/category/_key', {category: category})
+    } else {
+        throw new Error('404')
+    }
+})
+
+webRoutes.get('/admin/category/:key/delete', async (req, res) => {
+    await global.db.collection('categories').deleteOne({key: req.params.key})
+    res.redirect('/admin/category')
+})
+
 export default webRoutes
 

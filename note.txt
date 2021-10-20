@@ -162,14 +162,16 @@ app.post('/api/user', (req, res) => {
         // })
 
 
-<div class="header-block">
-    <ul>
-        <li class="header-item"><a href="/" class="menu-item color-text">ГЛАВНАЯ</a></li>
-        <li class="header-item"><a href="/news" class="menu-item">НОВОСТИ</a></li>
-        <li class="header-item"><a href="/profile" class="menu-item">ПРОФАЙЛ</a></li>
-        <li class="header-item"><a href="/products" class="menu-item">ПРОДУКТЫ</a></li>
-    </ul>
-</div>
+
+webRoutes.delete('/admin/news/:key', async (req, res) => {
+    let news = await global.db.collection('news').findOne({key: req.params.key})
+    if (news) {
+        res.render('admin/news/_key', {news: news})
+    } else {
+        throw new Error('404')
+    }
+})
+
 
 
 

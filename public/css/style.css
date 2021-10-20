@@ -122,3 +122,35 @@ input.invalid {
     font-size: 17px;
     cursor: pointer;
 }
+.admin__news_title {
+    display: block;
+    padding: 10px;
+    margin: 5px;
+    width: 70px;
+    cursor: pointer;
+    background-color: lightgreen;
+}
+.admin__articles_title {
+    display: block;
+    padding: 10px;
+    margin: 5px;
+    width: 70px;
+    cursor: pointer;
+    background-color: lightgreen;
+}
+.admin__category_title {
+    display: block;
+    padding: 10px;
+    margin: 5px;
+    width: 150px;
+    cursor: pointer;
+    background-color: lightgreen;
+}
+.delete_button {
+    display: block;
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    font-size: 17px;
+    cursor: pointer;
+}
