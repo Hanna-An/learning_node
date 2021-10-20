@@ -154,3 +154,10 @@ input.invalid {
     font-size: 17px;
     cursor: pointer;
 }
+
+/*зайди на сервак*/
+/*и потом список комманд*/
+/*cd /home/node/learning_node (вроде такой там путь, проверь)*/
+/*git pull origin master*/
+/*npm ci (если обновляла\добавляла пакеты)*/
+/*pm2 reload index*/
