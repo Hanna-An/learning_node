@@ -7,6 +7,11 @@ apiRoutes.get('/cars', async (req, res) => {
     res.render('cars', {title: 'cars', cars: arr})
 })
 
+apiRoutes.get('/shops', async (req, res) => {
+    let arr = await global.db.collection('shops').find().toArray()
+    res.render('shops', {title: 'shops', shops: arr})
+})
+
 apiRoutes.get('/news', async (req, res) => {
     let arr = await global.db.collection('news').find().toArray()
     res.render('news', {title: 'news', news: arr})

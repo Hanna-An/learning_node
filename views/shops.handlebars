@@ -1,0 +1,26 @@
+<div>
+    <a href="/" class="main">Главная</a>
+    <span class="main"> -> Магазины</span>
+</div>
+
+<h1>{{{title}}}</h1>
+
+{{#if shops}}
+    <ul>
+        {{#each shops}}
+            <li class="news_title">
+                <p><a href="{{this.url}}">{{this.title}}</a></p>
+            </li>
+            <p class="news_description">
+            <p><a href="{{this.url}}">{{this.address}}</a></p>
+            </p>
+        {{/each}}
+    </ul>
+{{/if}}
+
+<div>
+    {{#each pages}}
+        <a href="/shops?page={{this}}"> {{this}}</a>
+    {{/each}}
+</div>
+
