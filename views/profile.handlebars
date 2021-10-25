@@ -1,16 +1,18 @@
-<div>
-    <a href="/" class="main">Главная</a>
-    <a href="/profile" class="main"> -> Профайл</a>
+<div class="container p-4">
+      <div>
+        <a href="/" class="main">Главная</a>
+        <a href="/profile" class="main"> -> Профайл</a>
+    </div>
+
+    <h1>{{{title}}}</h1>
+
+    <ul>
+        <form action="/profile" method="post" enctype="multipart/form-data">
+            <p><input type="file" accept="image/*" name="avatar">
+            <input type="submit" value="Отправить"></p>
+        </form>
+    {{#if image}}
+        <img src="{{{image}}}" alt="">
+    {{/if}}
+    </ul>
 </div>
-
-<h1>{{{title}}}</h1>
-
-<ul>
-    <form action="/profile" method="post" enctype="multipart/form-data">
-        <p><input type="file" accept="image/*" name="avatar">
-        <input type="submit" value="Отправить"></p>
-    </form>
-{{#if image}}
-    <img src="{{{image}}}" alt="">
-{{/if}}
-</ul>
