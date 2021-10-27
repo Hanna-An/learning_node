@@ -1,0 +1,28 @@
+<div>
+    <a href="/" class="main">Главная</a>
+    -> <a href="/admin" class="main">Админ</a>
+    <span class="main"> -> Новости</span>
+</div>
+
+<h1>{{{title}}}</h1>
+
+<a href="/admin/news/add" class="main">Добавить новость</a>
+
+{{#if news}}
+    <ul>
+        {{#each news}}
+            <li class="admin__news_title">
+                <a href="{{this.url}}">{{this.title}}</a>
+                <form method="GET" action="/admin/news/{{this.key}}/delete">
+                    <button class="delete_button">Delete</button>
+                </form>
+            </li>
+        {{/each}}
+    </ul>
+{{/if}}
+
+<div>
+    {{#each pages}}
+        <a href="/admin?page={{this}}"> {{this}}</a>
+    {{/each}}
+</div>

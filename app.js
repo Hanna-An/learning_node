@@ -7,15 +7,15 @@ import webRoutes from './routes/web/index.js'
 import {MongoClient} from 'mongodb'
 import session from 'express-session'
 import passport from 'passport'
-// import bodyParser from 'body-parser'
+import bodyParser from 'body-parser'
 
 import {Strategy} from 'passport-local'
 
 
 
 const app = express()
-const host = '127.0.0.1'
-const port = 3000
+const host = process.env.HOST || '127.0.0.1'
+const port = process.env.PORT || 3000
 
 let db = null
 
@@ -83,11 +83,8 @@ app.set('port', port)
 app.use('/api', apiRoutes)
 app.use('/', webRoutes)
 
-app.use(express.json())
-app.use(express.urlencoded())
-// app.use(express.bodyParser())
-
-
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)

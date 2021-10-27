@@ -2,6 +2,8 @@ import express from 'express'
 import fs from 'fs'
 import path from 'path'
 import multer from 'multer'
+// import bodyParser from 'body-parser'
+
 import {ObjectId} from 'mongodb'
 
 
@@ -18,6 +20,28 @@ webRoutes.get('/', (req, res) => {
 webRoutes.get('/cars', async (req, res) => {
     let arr = await global.db.collection('cars').find().toArray()
     res.render('cars', {title: 'cars', cars: arr})
+})
+
+webRoutes.get('/shops', async (req, res) => {
+    let arr = await global.db.collection('shops').find().toArray()
+    arr.forEach(function (item) {
+        item.url = req._parsedOriginalUrl.pathname + '/' + item.key
+        console.log(item.key)
+    })
+    res.render('shops', {title: 'shops', shops: arr})
+})
+
+webRoutes.get('/shops/:key', async (req, res) => {
+    let shops = await global.db.collection('shops').findOne({key: req.params.key})
+    if (shops) {
+        // let schedule = await global.db.collection('shops').find({}).toArray()
+        // // schedule.forEach(function (schedule) {
+        // //     schedule.url = req._parsedOriginalUrl.path + '/' + schedule.key
+        // // })
+        res.render('shops/_key', {shops: shops, schedule: schedule})
+        } else {
+            throw new Error('404')
+        }
 })
 
 webRoutes.get('/news', async (req, res) => {
@@ -143,5 +167,134 @@ webRoutes.post('/login', async (req, res) => {
     res.send('ok')
 })
 
+webRoutes.get('/admin', async (req, res) => {
+    let arr = await global.db.collection('news').find().toArray()
+    arr.forEach(function (item) {
+        item.url = req._parsedOriginalUrl.pathname + '/' + item.key
+    })
+    res.render('admin', {title: 'admin'})
+})
+
+webRoutes.get('/admin/news', async (req, res) => {
+    let arr = await global.db.collection('news').find().toArray()
+    arr.forEach(function (item) {
+        item.url = req._parsedOriginalUrl.pathname + '/' + item.key
+    })
+    res.render('admin/news', {title: 'admin', news: arr})
+})
+
+webRoutes.get('/admin/news/add', async (req, res) => {
+    res.render('admin/news/add', {})
+})
+
+webRoutes.post('/admin/news/add', async (req, res) => {
+    // console.log(req)
+    console.log(req.body)
+        res.redirect('/admin/news')
+    // res.render('admin/news/add', {})
+})
+
+// webRoutes.post('/admin/news/add', async (req, res) => {
+//     console.log(req.body)
+//     res.redirect('/admin/news')
+// })
+// webRoutes.get('/admin/news/add', async (req, res) => {
+//     res.sendFile(path.join(__dirname, '/news.handlebars'))
+// })
+
+// app.post('/test', (req, res) => {
+//     console.log(req.body);
+//     res.redirect('/')
+// });
+//
+// app.get('/', function(req, res) {
+//     res.sendFile(path.join(__dirname, '/index.html'));
+// });
+
+
+
+webRoutes.get('/admin/news/:key', async (req, res) => {
+    let news = await global.db.collection('news').findOne({key: req.params.key})
+    if (news) {
+        res.render('admin/news/_key', {news: news})
+    } else {
+        throw new Error('404')
+    }
+})
+
+webRoutes.get('/admin/news/:key/delete', async (req, res) => {
+    await global.db.collection('news').deleteOne({key: req.params.key})
+    res.redirect('/admin/news')
+})
+
+webRoutes.get('/admin', async (req, res) => {
+    let arr = await global.db.collection('articles').find().toArray()
+    arr.forEach(function (item) {
+        item.url = req._parsedOriginalUrl.pathname + '/' + item.key
+    })
+    res.render('admin', {title: 'admin'})
+})
+
+webRoutes.get('/admin/articles', async (req, res) => {
+    let arr = await global.db.collection('articles').find().toArray()
+    arr.forEach(function (item) {
+        item.url = req._parsedOriginalUrl.pathname + '/' + item.key
+    })
+    res.render('admin/articles', {title: 'admin', articles: arr})
+})
+
+webRoutes.get('/admin/articles/:key', async (req, res) => {
+    let articles = await global.db.collection('articles').findOne({key: req.params.key})
+    if (articles) {
+        res.render('admin/articles/_key', {articles: articles})
+    } else {
+        throw new Error('404')
+    }
+})
+
+webRoutes.get('/admin/articles/:key/delete', async (req, res) => {
+    await global.db.collection('articles').deleteOne({key: req.params.key})
+    res.redirect('/admin/articles')
+})
+
+webRoutes.get('/admin', async (req, res) => {
+    let arr = await global.db.collection('categories').find().toArray()
+    arr.forEach(function (item) {
+        item.url = req._parsedOriginalUrl.pathname + '/' + item.key
+    })
+    res.render('admin', {title: 'admin'})
+})
+
+webRoutes.get('/admin/category', async (req, res) => {
+    let arr = await global.db.collection('categories').find().toArray()
+    arr.forEach(function (item) {
+        item.url = req._parsedOriginalUrl.pathname + '/' + item.key
+    })
+    res.render('admin/category', {title: 'admin', category: arr})
+})
+
+webRoutes.get('/admin/category/:key', async (req, res) => {
+    let category = await global.db.collection('categories').findOne({key: req.params.key})
+    if (category) {
+        res.render('admin/category/_key', {category: category})
+    } else {
+        throw new Error('404')
+    }
+})
+
+webRoutes.get('/admin/category/:key/delete', async (req, res) => {
+    await global.db.collection('categories').deleteOne({key: req.params.key})
+    res.redirect('/admin/category')
+})
+
 export default webRoutes
+
+// <magIT/sxewytb0u3rVlAS4thQ6XbASJJSeMU8ZrH+Qndlp6CQs/BIR+NpRozm/J7zTzBvhHJMGWzTzPlOK7RyBM8MwWCGqXKnpa3OZHhc42TOYBGSQcuoOrW9/tfA3pnl8Gy7rFbFHF7Nntu+0IHMy8TYxDQjsu/pb1pnv9pPB2qpnXHS4V88qKdaF2v61fbiNWgQeZT/Z>
+// ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQD0caUxJ5D/4a1fhgkN3lcr4S8wj/CbyUjG2n6vbUoBOw3z+aTdjpZCyg7wSgMZAnlACHKjVuVOQfF9ixzJX4EZDecup//fkEsgOfGqKi91ioSm5w/C+KJ3MUkAY0Kd1Gkq8tWIEO2vynEDBpTvnHpmdrU6a1s/ymagIT/>
+//
+
+
+
+
+
 
