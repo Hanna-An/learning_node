@@ -1,0 +1,26 @@
+<div>
+    <a href="/" class="main">Главная</a>
+    -> <a href="/admin" class="main">Админ</a>
+    <span class="main"> -> Профайл</span>
+</div>
+
+<a href="/admin/profile/add" class="main">Добавить профайл</a>
+
+{{#if profile}}
+    <ul>
+        {{#each profile}}
+            <li class="admin__profile_title">
+                <a href="{{this.url}}">{{this.name}}</a>
+                <form method="GET" action="/admin/profile/{{this.key}}/delete">
+                    <button class="delete_button">Delete</button>
+                </form>
+            </li>
+        {{/each}}
+    </ul>
+{{/if}}
+
+<div>
+    {{#each pages}}
+        <a href="/admin?page={{this}}"> {{this}}</a>
+    {{/each}}
+</div>
