@@ -14,6 +14,7 @@ import {Strategy} from 'passport-local'
 
 
 const app = express()
+app.use(bodyParser.urlencoded({ extended: true }))
 const host = process.env.HOST || '127.0.0.1'
 const port = process.env.PORT || 3000
 
@@ -82,9 +83,6 @@ app.set('port', port)
 
 app.use('/api', apiRoutes)
 app.use('/', webRoutes)
-
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)

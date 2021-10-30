@@ -1,10 +1,23 @@
 <div class="container p-4">
       <div>
         <a href="/" class="main">Главная</a>
-        <a href="/profile" class="main"> -> Профайл</a>
+        <span class="main"> -> Профайл</span>
     </div>
 
     <h1>{{{title}}}</h1>
+
+    {{#if profile}}
+        <ul>
+            {{#each profile}}
+                <li class="news_title">
+                    <p><a href="{{this.url}}">{{this.name}}</a></p>
+                </li>
+                <p class="news_description">
+                <p><a href="{{this.url}}">{{this.surname}}</a></p>
+                </p>
+            {{/each}}
+        </ul>
+    {{/if}}
 
     <ul>
         <form action="/profile" method="post" enctype="multipart/form-data">
@@ -16,3 +29,13 @@
     {{/if}}
     </ul>
 </div>
+
+<!--<div>-->
+<!--    {{#each pages}}-->
+<!--        <a href="/shops?page={{this}}"> {{this}}</a>-->
+<!--    {{/each}}-->
+<!--</div>-->
+
+
+
+<span>{{user}}</span>

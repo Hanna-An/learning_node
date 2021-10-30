@@ -15,8 +15,16 @@
     <p class="news_description">
         {{shops.description}}
     </p>
+
     <table>
-        {{shops.schedule}}
+        <p>Время работы:</p>
+        <tr><td>Понедельник: {{shops.schedule.Monday}}</td></tr>
+        <tr><td>Вторник: {{shops.schedule.Thusday}}</td></tr>
+        <tr><td>Среда: {{shops.schedule.Wednesday}}</td></tr>
+        <tr><td>Четверг: {{shops.schedule.Thursday}}</td></tr>
+        <tr><td>Пятница: {{shops.schedule.Friday}}</td></tr>
+        <tr><td>Суббота: {{shops.schedule.Saturday}}</td></tr>
+        <tr><td>Воскресенье: {{shops.schedule.Sunday}}</td></tr>
     </table>
 
 </div>

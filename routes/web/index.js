@@ -2,7 +2,6 @@ import express from 'express'
 import fs from 'fs'
 import path from 'path'
 import multer from 'multer'
-// import bodyParser from 'body-parser'
 
 import {ObjectId} from 'mongodb'
 
@@ -30,15 +29,10 @@ webRoutes.get('/shops', async (req, res) => {
     })
     res.render('shops', {title: 'shops', shops: arr})
 })
-
 webRoutes.get('/shops/:key', async (req, res) => {
     let shops = await global.db.collection('shops').findOne({key: req.params.key})
     if (shops) {
-        // let schedule = await global.db.collection('shops').find({}).toArray()
-        // // schedule.forEach(function (schedule) {
-        // //     schedule.url = req._parsedOriginalUrl.path + '/' + schedule.key
-        // // })
-        res.render('shops/_key', {shops: shops, schedule: schedule})
+        res.render('shops/_key', {shops: shops})
         } else {
             throw new Error('404')
         }
@@ -64,12 +58,28 @@ webRoutes.get('/news', async (req, res) => {
 })
 
 webRoutes.get('/news/:key', async (req, res) => {
-        let news = await global.db.collection('news').findOne({key: req.params.key})
-        if (news) {
-            res.render('news/_key', {news: news})
+    let previous
+    let current = req.params.key
+    let next
+    let news = await global.db.collection('news').findOne({key: current})
+    if (news) {
+        let arr = await global.db.collection('news').find({}).sort({key: 1}).toArray()
+        console.log(arr)
+        if (arr) {
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].key === current) {
+                    if (arr[i + 1]) {
+                        next = arr[i + 1]
+                    }
+                    break
+                }
+                previous = arr[i]
+            }
+            res.render('news/_key', {news: news, previous: previous, next: next})
         } else {
             throw new Error('404')
         }
+    }
 })
 
 webRoutes.get('/articles', async (req, res) => {
@@ -111,7 +121,6 @@ webRoutes.get('/category', async (req, res) => {
 
 webRoutes.get('/category/:key', async (req, res) => {
     let category = await global.db.collection('categories').findOne({key: req.params.key})
-    let limit = 4
     if (category) {
         let products = await global.db.collection('products').find({category_id: category._id}).toArray()
         products.forEach(function (product) {
@@ -137,9 +146,41 @@ webRoutes.get('/category/:key/:key_product', async (req, res) => {
     }
 })
 
-
 const upload = multer({
     dest: "./uploads"
+})
+
+webRoutes.get('/profile', async (req, res) => {
+    let arr = await global.db.collection('users').find().toArray()
+    arr.forEach(function (item) {
+        item.url = req._parsedOriginalUrl.pathname + '/' + item.key
+    })
+    res.render('profile', {profile: arr})
+})
+
+webRoutes.get('/profile/:key', async (req, res) => {
+    let profile = await global.db.collection('users').findOne({key: req.params.key})
+    if (profile) {
+        res.render('profile/_key', {profile: profile})
+    } else {
+        throw new Error('404')
+    }
+})
+
+webRoutes.post('/profile/:key', async (req, res) => {
+    const body = req.body
+    await global.db.collection('users').update(
+        {key: req.params.key},
+        {
+            $set : {
+                title: body.title,
+                image: body.image,
+                description: body.description,
+                key: body.title.replace(' ', '_')
+            }
+        },
+    )
+    res.redirect('profile')
 })
 
 webRoutes.route('/profile')
@@ -154,7 +195,7 @@ webRoutes.route('/profile')
         fs.rename(tempPath, targetPath, err => {
             if (err) return handleError(err, res)
 
-            res.render('profile', {title: 'Profile', image: '/uploads/' + req.file.originalname})
+            res.render('profile', {title: 'profile', image: '/uploads/' + req.file.originalname})
         })
     })
 
@@ -178,7 +219,7 @@ webRoutes.get('/admin', async (req, res) => {
 webRoutes.get('/admin/news', async (req, res) => {
     let arr = await global.db.collection('news').find().toArray()
     arr.forEach(function (item) {
-        item.url = req._parsedOriginalUrl.pathname + '/' + item.key
+        item.url = req._parsedOriginalUrl.pathname + '/' + item.key + '/edit'
     })
     res.render('admin/news', {title: 'admin', news: arr})
 })
@@ -188,35 +229,38 @@ webRoutes.get('/admin/news/add', async (req, res) => {
 })
 
 webRoutes.post('/admin/news/add', async (req, res) => {
-    // console.log(req)
     console.log(req.body)
-        res.redirect('/admin/news')
-    // res.render('admin/news/add', {})
+    const body = req.body
+    await global.db.collection('news').insert({
+        title: body.title,
+        image: body.image_url,
+        description: body.description,
+        key: body.title.replace(' ', '_')
+    })
+    res.redirect('/admin/news')
 })
 
-// webRoutes.post('/admin/news/add', async (req, res) => {
-//     console.log(req.body)
-//     res.redirect('/admin/news')
-// })
-// webRoutes.get('/admin/news/add', async (req, res) => {
-//     res.sendFile(path.join(__dirname, '/news.handlebars'))
-// })
+webRoutes.post('/admin/news/:key/edit', async (req, res) => {
+    console.log(req.body)
+    const body = req.body
+    await global.db.collection('news').update(
+        {key: req.params.key},
+        {
+            $set : {
+                title: body.title,
+                image: body.image,
+                description: body.description,
+                key: body.title.replace(' ', '_')
+            }
+        },
+    )
+    res.redirect('/admin/news')
+})
 
-// app.post('/test', (req, res) => {
-//     console.log(req.body);
-//     res.redirect('/')
-// });
-//
-// app.get('/', function(req, res) {
-//     res.sendFile(path.join(__dirname, '/index.html'));
-// });
-
-
-
-webRoutes.get('/admin/news/:key', async (req, res) => {
+webRoutes.get('/admin/news/:key/edit', async (req, res) => {
     let news = await global.db.collection('news').findOne({key: req.params.key})
     if (news) {
-        res.render('admin/news/_key', {news: news})
+        res.render('admin/news/_key_edit', {news: news})
     } else {
         throw new Error('404')
     }
@@ -226,6 +270,34 @@ webRoutes.get('/admin/news/:key/delete', async (req, res) => {
     await global.db.collection('news').deleteOne({key: req.params.key})
     res.redirect('/admin/news')
 })
+
+webRoutes.get('/admin', async (req, res) => {
+    let arr = await global.db.collection('users').find().toArray()
+    arr.forEach(function (item) {
+        item.url = req._parsedOriginalUrl.pathname + '/' + item.key
+    })
+    res.render('admin', {title: 'admin'})
+})
+
+// webRoutes.get('/admin/profile', async (req, res) => {
+//     let arr = await global.db.collection('users').find().toArray()
+//     arr.forEach(function (item) {
+//         item.url = req._parsedOriginalUrl.pathname + '/' + item.key + '/edit'
+//     })
+//     res.render('admin/profile', {title: 'admin', profile: arr})
+// })
+
+// webRoutes.post('/admin/profile/add', async (req, res) => {
+//     console.log(req.body)
+//     const body = req.body
+//     await global.db.collection('users').insert({
+//         title: body.name,
+//         surname: body.surname,
+//         image: body.image_url,
+//         key: body.name.replace(' ', '_')
+//     })
+//     res.redirect('/admin/profile')
+// })
 
 webRoutes.get('/admin', async (req, res) => {
     let arr = await global.db.collection('articles').find().toArray()
@@ -243,7 +315,40 @@ webRoutes.get('/admin/articles', async (req, res) => {
     res.render('admin/articles', {title: 'admin', articles: arr})
 })
 
-webRoutes.get('/admin/articles/:key', async (req, res) => {
+webRoutes.get('/admin/articles/add', async (req, res) => {
+    res.render('admin/articles/add', {})
+})
+
+webRoutes.post('/admin/articles/add', async (req, res) => {
+    console.log(req.body)
+    const body = req.body
+    await global.db.collection('articles').insert({
+        title: body.title,
+        image: body.image_url,
+        description: body.description,
+        key: body.title.replace(' ', '_')
+    })
+    res.redirect('/admin/articles')
+})
+
+webRoutes.post('/admin/articles/:key/edit', async (req, res) => {
+    console.log(req.body)
+    const body = req.body
+    await global.db.collection('articles').update(
+        {key: req.params.key},
+        {
+            $set : {
+                title: body.title,
+                image: body.image,
+                description: body.description,
+                key: body.title.replace(' ', '_')
+            }
+        },
+    )
+    res.redirect('/admin/articles')
+})
+
+webRoutes.get('/admin/articles/:key/edit', async (req, res) => {
     let articles = await global.db.collection('articles').findOne({key: req.params.key})
     if (articles) {
         res.render('admin/articles/_key', {articles: articles})
@@ -289,9 +394,6 @@ webRoutes.get('/admin/category/:key/delete', async (req, res) => {
 
 export default webRoutes
 
-// <magIT/sxewytb0u3rVlAS4thQ6XbASJJSeMU8ZrH+Qndlp6CQs/BIR+NpRozm/J7zTzBvhHJMGWzTzPlOK7RyBM8MwWCGqXKnpa3OZHhc42TOYBGSQcuoOrW9/tfA3pnl8Gy7rFbFHF7Nntu+0IHMy8TYxDQjsu/pb1pnv9pPB2qpnXHS4V88qKdaF2v61fbiNWgQeZT/Z>
-// ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQD0caUxJ5D/4a1fhgkN3lcr4S8wj/CbyUjG2n6vbUoBOw3z+aTdjpZCyg7wSgMZAnlACHKjVuVOQfF9ixzJX4EZDecup//fkEsgOfGqKi91ioSm5w/C+KJ3MUkAY0Kd1Gkq8tWIEO2vynEDBpTvnHpmdrU6a1s/ymagIT/>
-//
 
 
 
