@@ -1,14 +1,13 @@
-<form id="regForm" method="POST" action="/login">
-    <h1>Register:</h1>
-    <div>Contact Info:
-        <p><input type="email" placeholder="E-mail..." name="email"></p>
-        <p><input type="password" name="password"></p>
+<form id="regForm" method="POST" action="/login" class="login-form">
+    <h1 class="mb-3">Login</h1>
+    <div class="mb-3">
+      <input type="email" placeholder="E-mail" name="email">
     </div>
-
-    <div style="overflow:auto;">
-        <div style="float:right;">
-            <button id="prevBtn">Check</button>
-        </div>
+    <div class="mb-3">
+      <input type="password" placeholder="Password" name="password">
+    </div>
+    <div class="d-flex justify-content-end">
+      <button id="prevBtn" class="login-form__btn">Login</button>
     </div>
 </form>
 

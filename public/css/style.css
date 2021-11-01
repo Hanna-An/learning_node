@@ -63,13 +63,11 @@ ul li ul li:hover {
     margin: 5px 10px;
 }
 
-#regForm {
+.login-form {
     background-color: #ffffff;
     margin: 100px auto;
     font-family: Raleway;
-    padding: 40px;
-    width: 70%;
-    min-width: 300px;
+    max-width: 300px;
 }
 h1 {
     text-align: center;
@@ -87,7 +85,7 @@ input.invalid {
 .tab {
     display: none;
 }
-#prevBtn {
+.login-form__btn {
     background-color: #4CAF50;
     color: white;
     border: none;

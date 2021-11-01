@@ -67,7 +67,7 @@ passport.serializeUser((user, done) => done(null, user))
 passport.deserializeUser((user, done) => done(null, user))
 
 MongoClient.connect(
-    'mongodb://localhost:27017',
+    'mongodb://localhost:27018',
     async (err, client) => {
         if (err) {
             console.log('Connection error: ', err)
