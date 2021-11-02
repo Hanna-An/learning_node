@@ -2,18 +2,31 @@ import express from 'express'
 import fs from 'fs'
 import path from 'path'
 import multer from 'multer'
-
-import {ObjectId} from 'mongodb'
-
+import {ObjectId, ObjectID} from 'mongodb'
+import newsRoutes from './news.routes.js'
+import articlesRoutes from './articles.routes.js'
 
 let webRoutes = express.Router()
 
-webRoutes.get('/', (req, res) => {
-    res.render('home', {
-        title: 'Greetings form Handlebars',
-        content: 'Description how to use it handlebars',
-        style: 'style.css',
+webRoutes.use('/news', newsRoutes)
+webRoutes.use('/articles', articlesRoutes)
+
+webRoutes.get('/home', async (req, res) => {
+    const limit = 3
+    let arr = await global.db.collection('news').find().sort({"key": -1}).limit(limit).toArray()
+    arr.forEach(function (item) {
+        item.url = req._parsedOriginalUrl.pathname + '/' + item.key
     })
+    res.render('home', {title: 'news', news: arr})
+})
+
+webRoutes.get('/home/:key', async (req, res) => {
+    let articles = await global.db.collection('articles').findOne({key: req.params.key})
+    if (articles) {
+        res.render('home/_key', {articles: articles})
+    } else {
+        throw new Error('404')
+    }
 })
 
 webRoutes.get('/cars', async (req, res) => {
@@ -36,78 +49,6 @@ webRoutes.get('/shops/:key', async (req, res) => {
         } else {
             throw new Error('404')
         }
-})
-
-webRoutes.get('/news', async (req, res) => {
-    const limit = 2
-    let offset = 0
-    if (req.query.page) {
-        offset = req.query.page * limit - 2
-    }
-    let arr = await global.db.collection('news').find().skip(offset).limit(limit).toArray()
-    arr.forEach(function (item) {
-        item.url = req._parsedOriginalUrl.pathname + '/' + item.key
-    })
-    let count = await global.db.collection('news').count()
-    let pages = parseInt(count / limit) + 1
-    let arrPages = []
-    for (let i = 0; i < pages; i++) {
-        arrPages.push(i + 1)
-    }
-    res.render('news', {title: 'news', news: arr, pages: arrPages})
-})
-
-webRoutes.get('/news/:key', async (req, res) => {
-    let previous
-    let current = req.params.key
-    let next
-    let news = await global.db.collection('news').findOne({key: current})
-    if (news) {
-        let arr = await global.db.collection('news').find({}).sort({key: 1}).toArray()
-        console.log(arr)
-        if (arr) {
-            for (let i = 0; i < arr.length; i++) {
-                if (arr[i].key === current) {
-                    if (arr[i + 1]) {
-                        next = arr[i + 1]
-                    }
-                    break
-                }
-                previous = arr[i]
-            }
-            res.render('news/_key', {news: news, previous: previous, next: next})
-        } else {
-            throw new Error('404')
-        }
-    }
-})
-
-webRoutes.get('/articles', async (req, res) => {
-    const limit = 2
-    let offset = 0
-    if (req.query.page) {
-        offset = req.query.page * limit - 2
-    }
-    let arr = await global.db.collection('articles').find().skip(offset).limit(limit).toArray()
-    arr.forEach(function (item) {
-        item.url = req._parsedOriginalUrl.pathname + '/' + item.key
-    })
-    let count = await global.db.collection('articles').count()
-    let pages = parseInt(count / limit) + 1
-    let arrPages = []
-    for (let i = 0; i < pages; i++) {
-        arrPages.push(i + 1)
-    }
-    res.render('articles', {title: 'articles', articles: arr, pages: arrPages})
-})
-
-webRoutes.get('/articles/:key', async (req, res) => {
-    let articles = await global.db.collection('articles').findOne({key: req.params.key})
-    if (articles) {
-        res.render('articles/_key', {articles: articles})
-    } else {
-        throw new Error('404')
-    }
 })
 
 webRoutes.get('/category', async (req, res) => {
@@ -150,53 +91,44 @@ const upload = multer({
     dest: "./uploads"
 })
 
-webRoutes.get('/profile', async (req, res) => {
-    let arr = await global.db.collection('users').find().toArray()
-    arr.forEach(function (item) {
-        item.url = req._parsedOriginalUrl.pathname + '/' + item.key
-    })
-    res.render('profile', {profile: arr})
-})
-
-webRoutes.get('/profile/:key', async (req, res) => {
-    let profile = await global.db.collection('users').findOne({key: req.params.key})
+webRoutes.get('/profile/:id', async (req, res) => {
+    console.log(req.params.id)
+    let profile = await global.db.collection('users').findOne({_id: new ObjectID(req.params.id)})
+    console.log(profile)
     if (profile) {
-        res.render('profile/_key', {profile: profile})
+        res.render('profile/_id', {profile: profile})
     } else {
         throw new Error('404')
     }
 })
 
-webRoutes.post('/profile/:key', async (req, res) => {
+webRoutes.get('/profile', async (req, res) => {
+        let profile = await global.db.collection('users').findOne()
+        res.render('profile', {title: 'Profile', profile: profile})
+    })
+
+webRoutes.post('/profile/:id', async (req, res) => {
     const body = req.body
     await global.db.collection('users').update(
-        {key: req.params.key},
+        {_id: new ObjectID(req.params.id)},
         {
-            $set : {
-                title: body.title,
-                image: body.image,
-                description: body.description,
-                key: body.title.replace(' ', '_')
+            $set: {
+                name: body.name,
+                surname: body.surname,
+                image: body.image
             }
         },
     )
-    res.redirect('profile')
-})
+    res.redirect('/profile')
 
-webRoutes.route('/profile')
-    .get(async (req, res) => {
-        res.render('profile', {title: 'Profile'})
-    })
-
-    .post(upload.single("avatar"), (req, res) => {
-        const tempPath = req.file.path
-        const targetPath = path.join('./public/uploads', req.file.originalname)
-
-        fs.rename(tempPath, targetPath, err => {
-            if (err) return handleError(err, res)
-
-            res.render('profile', {title: 'profile', image: '/uploads/' + req.file.originalname})
-        })
+        // const tempPath = req.file.path
+        // const targetPath = path.join('./public/uploads', req.file.originalname)
+        //
+        // fs.rename(tempPath, targetPath, err => {
+        //     if (err) return handleError(err, res)
+        //
+        //     res.render('profile', {title: 'profile', image: '/uploads/' + req.file.originalname})
+        // })
     })
 
 webRoutes.get('/login', async (req, res) => {
@@ -210,6 +142,46 @@ webRoutes.post('/login', async (req, res) => {
 
 webRoutes.get('/signup', async (req, res) => {
     res.render('signup')
+})
+
+webRoutes.get('/admin', async (req, res) => {
+    let arr = await global.db.collection('users').find().toArray()
+    res.render('admin', {title: 'admin'})
+})
+
+webRoutes.get('/admin/profile', async (req, res) => {
+    let arr = await global.db.collection('users').find().toArray()
+    res.render('admin/profile', {title: 'admin', profile: arr})
+})
+
+
+webRoutes.get('/admin/profile/:id', async (req, res) => {
+    let profile = await global.db.collection('users').findOne({_id: new ObjectID(req.params.id)})
+    if (profile) {
+        res.render('admin/profile/_id', {profile: profile})
+    } else {
+        throw new Error('404')
+    }
+})
+
+webRoutes.get('admin/profile', async (req, res) => {
+    let profile = await global.db.collection('users').findOne()
+    res.render('profile', {title: 'Profile', profile: profile})
+})
+
+webRoutes.post('/admin/profile/:id', async (req, res) => {
+    const body = req.body
+    await global.db.collection('users').update(
+        {_id: new ObjectID(req.params.id)},
+        {
+            $set: {
+                name: body.name,
+                surname: body.surname,
+                image: body.image
+            }
+        },
+    )
+    res.redirect('/admin/profile')
 })
 
 webRoutes.get('/admin', async (req, res) => {
@@ -276,34 +248,6 @@ webRoutes.get('/admin/news/:key/delete', async (req, res) => {
 })
 
 webRoutes.get('/admin', async (req, res) => {
-    let arr = await global.db.collection('users').find().toArray()
-    arr.forEach(function (item) {
-        item.url = req._parsedOriginalUrl.pathname + '/' + item.key
-    })
-    res.render('admin', {title: 'admin'})
-})
-
-// webRoutes.get('/admin/profile', async (req, res) => {
-//     let arr = await global.db.collection('users').find().toArray()
-//     arr.forEach(function (item) {
-//         item.url = req._parsedOriginalUrl.pathname + '/' + item.key + '/edit'
-//     })
-//     res.render('admin/profile', {title: 'admin', profile: arr})
-// })
-
-// webRoutes.post('/admin/profile/add', async (req, res) => {
-//     console.log(req.body)
-//     const body = req.body
-//     await global.db.collection('users').insert({
-//         title: body.name,
-//         surname: body.surname,
-//         image: body.image_url,
-//         key: body.name.replace(' ', '_')
-//     })
-//     res.redirect('/admin/profile')
-// })
-
-webRoutes.get('/admin', async (req, res) => {
     let arr = await global.db.collection('articles').find().toArray()
     arr.forEach(function (item) {
         item.url = req._parsedOriginalUrl.pathname + '/' + item.key
@@ -314,7 +258,7 @@ webRoutes.get('/admin', async (req, res) => {
 webRoutes.get('/admin/articles', async (req, res) => {
     let arr = await global.db.collection('articles').find().toArray()
     arr.forEach(function (item) {
-        item.url = req._parsedOriginalUrl.pathname + '/' + item.key
+        item.url = req._parsedOriginalUrl.pathname + '/' + item.key + '/edit'
     })
     res.render('admin/articles', {title: 'admin', articles: arr})
 })
@@ -354,6 +298,7 @@ webRoutes.post('/admin/articles/:key/edit', async (req, res) => {
 
 webRoutes.get('/admin/articles/:key/edit', async (req, res) => {
     let articles = await global.db.collection('articles').findOne({key: req.params.key})
+    console.log(articles)
     if (articles) {
         res.render('admin/articles/_key', {articles: articles})
     } else {

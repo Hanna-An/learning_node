@@ -1,0 +1,16 @@
+<form action="/profile/{{profile._id}}" method="POST">
+    <div>
+        <label>name</label>
+        <input name="name" type="text" value="{{profile.name}}">
+    </div>
+    <div>
+        <label>surname</label>
+        <input name="surname" type="text" value="{{profile.surname}}">
+    </div>
+    <div>
+        <label>image</label>
+        <input type="text" value="{{profile.image}}" name="image">
+        <img src="{{profile.image}}" width="350" height="350">
+    </div>
+    <button>save</button>
+</form>

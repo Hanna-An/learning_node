@@ -6,36 +6,14 @@
 
     <h1>{{{title}}}</h1>
 
+    <a href="/profile/{{profile._id}}">edit</a>
+
     {{#if profile}}
-        <ul>
-            {{#each profile}}
-                <li class="news_title">
-                    <p><a href="{{this.url}}">{{this.name}}</a></p>
-                </li>
-                <p class="news_description">
-                <p><a href="{{this.url}}">{{this.surname}}</a></p>
-                </p>
-            {{/each}}
-        </ul>
+        <div>
+            {{profile.name}}
+        </div>
+        <div>
+            {{profile.surname}}
+        </div>
     {{/if}}
-
-    <ul>
-        <form action="/profile" method="post" enctype="multipart/form-data">
-            <p><input type="file" accept="image/*" name="avatar">
-            <input type="submit" value="Отправить"></p>
-        </form>
-    {{#if image}}
-        <img src="{{{image}}}" alt="">
-    {{/if}}
-    </ul>
 </div>
-
-<!--<div>-->
-<!--    {{#each pages}}-->
-<!--        <a href="/shops?page={{this}}"> {{this}}</a>-->
-<!--    {{/each}}-->
-<!--</div>-->
-
-
-
-<span>{{user}}</span>
