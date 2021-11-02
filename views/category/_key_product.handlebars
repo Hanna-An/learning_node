@@ -1,14 +1,16 @@
-<div>
-    <a href="/" class="main">Главная</a>
-    -> <a href="/category">Категории</a>
-    -> <a href="/category/car_goods">{{{title}}}</a>
-    <span> -> {{{product.title}}}</span>
-</div>
+<div class="container p-4">
+  <div>
+      <a href="/" class="main">Главная</a>
+      -> <a href="/category">Категории</a>
+      -> <a href="/category/car_goods">{{{title}}}</a>
+      <span> -> {{{product.title}}}</span>
+  </div>
 
-<div>
-    <span class="furniture_title">{{product.title}}</span>
-    <p class="furniture_description">{{product.description}}</p>
-    <p class="furniture_img">
-        <img src="{{product.preview_img}}" width="350" height="350">
-    </p>
+  <div>
+      <span class="furniture_title">{{product.title}}</span>
+      <p class="furniture_description">{{product.description}}</p>
+      <p class="furniture_img">
+          <img src="{{product.preview_img}}" width="350" height="350">
+      </p>
+  </div>
 </div>

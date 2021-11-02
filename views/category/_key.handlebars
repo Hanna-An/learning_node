@@ -1,19 +1,21 @@
-<div>
-    <a href="/" class="main">Главная</a>
-    -> <a href="/category">Категории</a>
-    <span> -> {{{title}}}</span>
+<div class="container p-4">
+  <div>
+      <a href="/" class="main">Главная</a>
+      -> <a href="/category">Категории</a>
+      <span> -> {{{title}}}</span>
 
-</div>
+  </div>
 
-<div>
-    {{#each products}}
-        <div>
-            <a href="{{this.url}}" class="furniture_title">{{this.title}}</a>
-            <p class="furniture_description">{{this.description}}</p>
-            <a href="{{this.url}}" class="furniture_img">
-                <img src="{{this.preview_img}}" width="350" height="350">
-            </a>
-                {{products}}
-        </div>
-    {{/each}}
+  <div>
+      {{#each products}}
+          <div>
+              <a href="{{this.url}}" class="furniture_title">{{this.title}}</a>
+              <p class="furniture_description">{{this.description}}</p>
+              <a href="{{this.url}}" class="furniture_img">
+                  <img src="{{this.preview_img}}" width="350" height="350">
+              </a>
+                  {{products}}
+          </div>
+      {{/each}}
+  </div>
 </div>

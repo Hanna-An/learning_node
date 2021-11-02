@@ -140,6 +140,10 @@ webRoutes.post('/login', async (req, res) => {
     res.send('ok')
 })
 
+webRoutes.get('/signup', async (req, res) => {
+    res.render('signup')
+})
+
 webRoutes.get('/admin', async (req, res) => {
     let arr = await global.db.collection('users').find().toArray()
     res.render('admin', {title: 'admin'})

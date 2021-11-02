@@ -1,20 +1,22 @@
-<div>
-    <a href="/" class="main">Главная</a>
-    -> <a href="/news">Новости</a>
-    <span> -> {{{news.title}}}</span>
-</div>
+<div class="container p-4">
+  <div>
+      <a href="/" class="main">Главная</a>
+      -> <a href="/news">Новости</a>
+      <span> -> {{{news.title}}}</span>
+  </div>
 
-<h1>{{{news.title}}}</h1>
+  <h1>{{{news.title}}}</h1>
 
-<div>
-    <span class="furniture_title">{{news.title}}</span>
-    <p class="furniture_description">{{news.description}}</p>
-    <p class="furniture_img">
-        <img src="{{news.image}}" width="350" height="350">
-    </p>
-</div>
+  <div>
+      <span class="furniture_title">{{news.title}}</span>
+      <p class="furniture_description">{{news.description}}</p>
+      <p class="furniture_img">
+          <img src="{{news.image}}" width="350" height="350">
+      </p>
+  </div>
 
-<div class="pagination">
-    <a href="/news/{{previous.key}}"><-{{previous.title}}</a>
-    <a href="/news/{{next.key}}">{{next.title}}-></a>
+  <div class="pagination">
+      <a href="/news/{{previous.key}}"><-{{previous.title}}</a>
+      <a href="/news/{{next.key}}">{{next.title}}-></a>
+  </div>
 </div>
