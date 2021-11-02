@@ -4,14 +4,12 @@
     <span class="main"> -> Профайл</span>
 </div>
 
-<a href="/admin/profile/add" class="main">Добавить профайл</a>
-
 {{#if profile}}
     <ul>
         {{#each profile}}
             <li class="admin__profile_title">
-                <a href="{{this.url}}">{{this.name}}</a>
-                <form method="GET" action="/admin/profile/{{this.key}}/delete">
+                <a href="/admin/profile/{{this._id}}">{{this.name}}</a>
+                <form method="GET" action="/admin/profile/{{this._id}}/delete">
                     <button class="delete_button">Delete</button>
                 </form>
             </li>
@@ -21,6 +19,7 @@
 
 <div>
     {{#each pages}}
-        <a href="/admin?page={{this}}"> {{this}}</a>
+        <a href="/admin?page={{this}}">{{this}}</a>
     {{/each}}
 </div>
+
