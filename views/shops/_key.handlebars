@@ -1,12 +1,13 @@
-<div>
-    <a href="/" class="main">Главная</a>
-    -> <a href="/shops">Магазины</a>
-    <span> -> {{{shops.title}}}</span>
-</div>
+<div class="container p-4">
+  <div>
+      <a href="/" class="main">Главная</a>
+      -> <a href="/shops">Магазины</a>
+      <span> -> {{{shops.title}}}</span>
+  </div>
 
-<h1>{{{shops.title}}}</h1>
+  <h1>{{{shops.title}}}</h1>
 
-<div>
+  <div>
     <span class="furniture_title">{{shops.title}}</span>
     <p class="furniture_description">{{shops.address}}</p>
     <p class="furniture_img">
@@ -16,15 +17,36 @@
         {{shops.description}}
     </p>
 
-    <table>
-        <p>Время работы:</p>
-        <tr><td>Понедельник: {{shops.schedule.Monday}}</td></tr>
-        <tr><td>Вторник: {{shops.schedule.Thusday}}</td></tr>
-        <tr><td>Среда: {{shops.schedule.Wednesday}}</td></tr>
-        <tr><td>Четверг: {{shops.schedule.Thursday}}</td></tr>
-        <tr><td>Пятница: {{shops.schedule.Friday}}</td></tr>
-        <tr><td>Суббота: {{shops.schedule.Saturday}}</td></tr>
-        <tr><td>Воскресенье: {{shops.schedule.Sunday}}</td></tr>
+    <p>Время работы:</p>
+    <table class="mb-3">
+      <tr><td>Понедельник: {{shops.schedule.Monday}}</td></tr>
+      <tr><td>Вторник: {{shops.schedule.Thusday}}</td></tr>
+      <tr><td>Среда: {{shops.schedule.Wednesday}}</td></tr>
+      <tr><td>Четверг: {{shops.schedule.Thursday}}</td></tr>
+      <tr><td>Пятница: {{shops.schedule.Friday}}</td></tr>
+      <tr><td>Суббота: {{shops.schedule.Saturday}}</td></tr>
+      <tr><td>Воскресенье: {{shops.schedule.Sunday}}</td></tr>
     </table>
 
+    <div id="map" style="width: 600px; height: 400px"></div>
+  </div>
 </div>
+
+<script>
+  ymaps.ready(init);
+
+  function init() {
+    var myMap = new ymaps.Map("map", {
+        center: [{{shops.coordinates.latitude}}, {{shops.coordinates.longitude}}],
+        zoom: 12
+      }, {
+        searchControlProvider: 'yandex#search'
+      });
+    myMap.geoObjects
+      .add(new ymaps.Placemark([{{shops.coordinates.latitude}}, {{shops.coordinates.longitude}}], {
+        preset: 'islands#icon',
+        iconColor: '#0095b6'
+      }))
+  }
+
+</script>
