@@ -396,6 +396,10 @@ webRoutes.get('/admin/category/:key/delete', async (req, res) => {
     res.redirect('/admin/category')
 })
 
+webRoutes.get('/cart', async (req, res) => {
+    res.render('cart')
+})
+
 export default webRoutes
 
 

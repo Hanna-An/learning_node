@@ -97,3 +97,15 @@ input.invalid {
     font-size: 17px;
     cursor: pointer;
 }
+
+.cart-item {
+    -webkit-box-shadow: 2px 5px 13px 0px rgba(66, 68, 90, 0.32);
+    -moz-box-shadow: 2px 5px 13px 0px rgba(66, 68, 90, 0.32);
+    box-shadow: 2px 5px 13px 0px rgba(66, 68, 90, 0.32);
+    max-width: 600px;
+}
+
+.cart-btn {
+    height: 30px;
+    width: 30px;
+}
