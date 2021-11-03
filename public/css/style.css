@@ -63,6 +63,10 @@ ul li ul li:hover {
     margin: 5px 10px;
 }
 
+.furniture_img img {
+    object-fit: contain;
+}
+
 .login-form {
     background-color: #ffffff;
     margin: 100px auto;
