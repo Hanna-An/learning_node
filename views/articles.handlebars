@@ -9,20 +9,20 @@
     {{#if articles}}
         <ul>
             {{#each articles}}
-                <li class="news_title">
-                    <a href="{{this.url}}">{{this.title}}</a>
-                </li>
-                <p class="news_description">
-                    {{description}}
-                </p>
+              {{> articles-card }}
             {{/each}}
         </ul>
     {{/if}}
 
-    <div>
+
+    <nav class="mt-4">
+      <ul class="pagination pagination-sm">
         {{#each pages}}
-            <a href="/articles?page={{this}}"> {{this}}</a>
+          <li class="page-item">
+            <a class="page-link" href="/articles?page={{this}}"> {{this}} </a>
+          </li>
         {{/each}}
-    </div>
+      </ul>
+    </nav>
 
 </div>
