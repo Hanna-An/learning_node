@@ -31,36 +31,19 @@ ul {
     font-size: 30px;
 }
 .news_description {
-    margin: 10px;
     font-size: 20px;
 }
 
-.div.image-block > a > img {
-    width: 25%;
-}
-
-.name_category {
-    width: 24%;
-    text-align: center;
-    display: inline-block;
-}
 .title {
     font-size: 15px;
     display: block;
 }
 .furniture_title {
-    margin: 10px;
     font-size: 20px;
-    background: yellow;
-}
-.furniture_description {
-    margin: 5px 10px;
-}
-.furniture_img {
-    margin: 5px 10px;
 }
 
-.furniture_img img {
+.furniture_img {
+    max-width: 300px;
     object-fit: contain;
 }
 
@@ -111,4 +94,13 @@ input.invalid {
 
 .navbar-light .navbar-nav .nav-link {
     color: #fff !important;
+}
+
+.admin-list-group {
+    max-width: 300px;
+}
+
+.category-img {
+    height: 200px;
+    object-fit: cover;
 }

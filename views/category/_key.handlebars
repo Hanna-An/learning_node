@@ -1,21 +1,24 @@
 <div class="container p-4">
-  <div>
+  <div class="mb-4">
       <a href="/" class="main">Главная</a>
       -> <a href="/category">Категории</a>
       <span> -> {{{title}}}</span>
 
   </div>
 
-  <div>
+  <div class="row">
       {{#each products}}
-          <div>
-              <a href="{{this.url}}" class="furniture_title">{{this.title}}</a>
-              <p class="furniture_description">{{this.description}}</p>
-              <a href="{{this.url}}" class="furniture_img">
-                  <img src="{{this.preview_img}}" width="350" height="350">
-              </a>
-                  {{products}}
+      <div class="col-12 col-md-6 col-lg-3">
+        <div class="card mb-4">
+          <img src="{{this.preview_img}}" class="card-img-top category-img" alt="">
+          <div class="card-body">
+            <a href="{{this.url}}"><h5 class="card-title">{{this.title}}</h5></a>
+            <p class="card-text">{{this.description}}.</p>
+            <a href="#" class="btn btn-primary">Add to cart</a>
           </div>
+          {{products}}
+        </div>
+      </div>
       {{/each}}
   </div>
 </div>

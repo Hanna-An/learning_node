@@ -1,5 +1,5 @@
 <div class="container p-4">
-  <div>
+  <div class="mb-4">
       <a href="/" class="main">Главная</a>
       -> <a href="/category">Категории</a>
       -> <a href="/category/car_goods">{{{title}}}</a>
@@ -7,10 +7,8 @@
   </div>
 
   <div>
-      <span class="furniture_title">{{product.title}}</span>
-      <p class="furniture_description">{{product.description}}</p>
-      <p class="furniture_img">
-          <img src="{{product.preview_img}}" width="350" height="350">
-      </p>
+      <h3>{{product.title}}</h3>
+      <div>{{product.description}}</div>
+      <img src="{{product.preview_img}}" class="furniture_img my-4">
   </div>
 </div>
