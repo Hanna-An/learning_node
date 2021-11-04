@@ -91,7 +91,11 @@ app.use('/public/uploads', express.static(path.join(__dirname, 'public/uploads')
 app.use(express.static(path.join(__dirname, 'public')))
 app.engine(
     'handlebars',
-    handlebars({defaultLayout: 'main'})
+    handlebars({
+      defaultLayout: 'main',
+      // layoutsDir: __dirname + '/views/pages/',
+      partialsDir: __dirname + '/views/partials/'
+    })
 )
 app.set('views', './views')
 app.set('view engine', 'handlebars')

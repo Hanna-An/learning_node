@@ -7,24 +7,43 @@
   <h1>{{{shops.title}}}</h1>
 
   <div>
-    <span class="furniture_title">{{shops.title}}</span>
-    <p class="furniture_description">{{shops.address}}</p>
-    <p class="furniture_img">
-        <img src="{{shops.img}}" width="350" height="350">
-    </p>
-    <p class="news_description">
+    <h3>{{shops.title}}</h3>
+    <div>{{shops.address}}</div>
+    <img src="{{shops.img}}" class="furniture_img my-4">
+    <div class="mb-4">
         {{shops.description}}
-    </p>
+    </div>
 
-    <p>Время работы:</p>
-    <table class="mb-3">
-      <tr><td>Понедельник: {{shops.schedule.Monday}}</td></tr>
-      <tr><td>Вторник: {{shops.schedule.Thusday}}</td></tr>
-      <tr><td>Среда: {{shops.schedule.Wednesday}}</td></tr>
-      <tr><td>Четверг: {{shops.schedule.Thursday}}</td></tr>
-      <tr><td>Пятница: {{shops.schedule.Friday}}</td></tr>
-      <tr><td>Суббота: {{shops.schedule.Saturday}}</td></tr>
-      <tr><td>Воскресенье: {{shops.schedule.Sunday}}</td></tr>
+    <h4>Время работы:</h4>
+    <table class="mb-4">
+      <tr>
+        <td>Понедельник:</td>
+        <td>{{shops.schedule.Monday}}</td>
+      </tr>
+      <tr>
+        <td>Вторник:</td>
+        <td>{{shops.schedule.Thusday}}</td>
+      </tr>
+      <tr>
+        <td>Среда:</td>
+        <td>{{shops.schedule.Wednesday}}</td>
+      </tr>
+      <tr>
+        <td>Четверг:</td>
+        <td>{{shops.schedule.Thursday}}</td>
+      </tr>
+      <tr>
+        <td>Пятница:</td>
+        <td>{{shops.schedule.Friday}}</td>
+      </tr>
+      <tr>
+        <td>Суббота:</td>
+        <td>{{shops.schedule.Saturday}}</td>
+      </tr>
+      <tr>
+        <td>Воскресенье:</td>
+        <td>{{shops.schedule.Sunday}}</td>
+      </tr>
     </table>
 
     <div id="map" style="width: 600px; height: 400px"></div>
