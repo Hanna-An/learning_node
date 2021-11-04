@@ -1,0 +1,16 @@
+<form action="/admin/articles/{{articles.key}}/edit" method="POST">
+    <div>
+        <label>title</label>
+        <input type="text" value="{{articles.title}}" name="title">
+    </div>
+    <div>
+        <label>description</label>
+        <textarea name="description" id="" cols="30" rows="10">{{articles.description}}</textarea>
+    </div>
+    <div>
+        <label>image</label>
+        <input type="text" value="{{articles.image}}" name="image">
+        <img src="{{articles.image}}" width="350" height="350">
+    </div>
+    <button>save</button>
+</form>

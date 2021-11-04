@@ -2,6 +2,11 @@ import express from 'express'
 
 let apiRoutes = express.Router()
 
+apiRoutes.get('/', async (req, res) => {
+    let arr = await global.db.collection('articles').find().toArray()
+    res.render('articles', {title: 'articles', articles: arr})
+})
+
 apiRoutes.get('/cars', async (req, res) => {
     let arr = await global.db.collection('cars').find().toArray()
     res.render('cars', {title: 'cars', cars: arr})
