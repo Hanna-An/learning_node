@@ -12,7 +12,7 @@ let webRoutes = express.Router()
 webRoutes.use('/news', newsRoutes)
 webRoutes.use('/articles', articlesRoutes)
 
-webRoutes.get('/home', async (req, res) => {
+webRoutes.get('/', async (req, res) => {
     const limit = 3
     let arr = await global.db.collection('news').find().sort({_id: -1}).limit(limit).toArray()
     arr.forEach(function (item) {
@@ -21,10 +21,10 @@ webRoutes.get('/home', async (req, res) => {
     res.render('home', {title: 'news', news: arr})
 })
 
-webRoutes.get('/home/:key', async (req, res) => {
+webRoutes.get('//:key', async (req, res) => {
     let articles = await global.db.collection('articles').findOne({key: req.params.key})
     if (articles) {
-        res.render('home/_key', {articles: articles})
+        res.render('//_key', {articles: articles})
     } else {
         throw new Error('404')
     }
