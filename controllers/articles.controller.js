@@ -17,16 +17,16 @@ export default class ArticlesController {
             arrPages.push(i + 1)
         }
         return res.render('articles', {title: 'articles', articles: arr, pages: arrPages})
-        }
+    }
 
-        static async getDetailArticles (req, res) {
-            let articles = await global.db.collection('articles').findOne({key: req.params.key})
-                if (articles) {
-                    return res.render('articles/_key', {articles: articles})
-                } else {
-                    throw new Error('404')
-                }
-            }
+    static async getDetailArticles(req, res) {
+        let articles = await global.db.collection('articles').findOne({key: req.params.key})
+        if (articles) {
+            return res.render('articles/_key', {articles: articles})
+        } else {
+            throw new Error('404')
+        }
+    }
 }
 
 
