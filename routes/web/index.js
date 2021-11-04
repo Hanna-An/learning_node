@@ -6,6 +6,7 @@ import {ObjectId, ObjectID} from 'mongodb'
 import newsRoutes from './news.routes.js'
 import articlesRoutes from './articles.routes.js'
 
+
 let webRoutes = express.Router()
 
 webRoutes.use('/news', newsRoutes)
@@ -13,7 +14,7 @@ webRoutes.use('/articles', articlesRoutes)
 
 webRoutes.get('/home', async (req, res) => {
     const limit = 3
-    let arr = await global.db.collection('news').find().sort({"key": -1}).limit(limit).toArray()
+    let arr = await global.db.collection('news').find().sort({_id: -1}).limit(limit).toArray()
     arr.forEach(function (item) {
         item.url = req._parsedOriginalUrl.pathname + '/' + item.key
     })
