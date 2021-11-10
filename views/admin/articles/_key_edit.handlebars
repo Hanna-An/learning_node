@@ -1,4 +1,15 @@
 <form action="/admin/articles/{{articles.key}}/edit" method="POST">
+
+    {{#if errors}}
+        <ul>
+            {{#each errors}}
+                <li>
+                    {{this}}
+                </li>
+            {{/each}}
+        </ul>
+    {{/if}}
+
     <div>
         <label>title</label>
         <input type="text" value="{{articles.title}}" name="title">

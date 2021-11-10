@@ -1,4 +1,15 @@
 <form action="/admin/profile/{{profile._id}}" method="POST">
+
+    {{#if errors}}
+        <ul>
+            {{#each errors}}
+                <li>
+                    {{this}}
+                </li>
+            {{/each}}
+        </ul>
+    {{/if}}
+
     <div>
         <label>name</label>
         <input name="name" type="text" value="{{profile.name}}">
@@ -11,6 +22,10 @@
         <label>image</label>
         <input type="text" value="{{profile.image}}" name="image">
         <img src="{{profile.image}}" width="350" height="350">
+    </div>
+    <div>
+        <label>birth_date</label>
+        <input name="birth_date" type="date" value="{{profile.birth_date}}">
     </div>
     <button>save</button>
 </form>

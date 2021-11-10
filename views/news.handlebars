@@ -1,10 +1,33 @@
 <div class="container p-4">
+
+    <style>
+        aside {
+            background: #f0f0f0;
+            padding: 10px;
+            width: 200px;
+            float: right;
+        }
+        </style>
+
       <div>
         <a href="/" class="main">Главная</a>
         <span class="main"> -> Новости</span>
     </div>
 
     <h1>{{{title}}}</h1>
+
+    <aside>
+        <span>Популярные новости:</span>
+        {{#if popularNews}}
+            <ul>
+                {{#each popularNews}}
+                    <li class="news_title">
+                        <a href="{{this.url}}">{{this.title}}</a>
+                    </li>
+                {{/each}}
+            </ul>
+        {{/if}}
+    </aside>
 
     {{#if news}}
         <ul>
@@ -24,3 +47,5 @@
       </ul>
     </nav>
 </div>
+
+

@@ -1,0 +1,31 @@
+<form action="/admin/shops/{{shops.key}}/edit" method="POST">
+
+    {{#if errors}}
+        <ul>
+            {{#each errors}}
+                <li>
+                    {{this}}
+                </li>
+            {{/each}}
+        </ul>
+    {{/if}}
+
+    <div>
+        <label>title</label>
+        <input type="text" value="{{shops.title}}" name="title">
+    </div>
+    <div>
+        <label>address</label>
+        <textarea name="address" id="" cols="30" rows="10">{{shops.address}}</textarea>
+    </div>
+    <div>
+        <label>description</label>
+        <textarea name="description" id="" cols="30" rows="10">{{shops.description}}</textarea>
+    </div>
+    <div>
+        <label>image</label>
+        <input type="text" value="{{shops.image}}" name="image">
+        <img src="{{shops.image}}" width="350" height="350">
+    </div>
+    <button>save</button>
+</form>
