@@ -1,6 +1,6 @@
 export default class NewsController {
     static async getNews(req, res) {
-        const limit = 2
+        let limit = 2
         let offset = 0
         if (req.query.page) {
             offset = req.query.page * limit - 2
@@ -15,7 +15,12 @@ export default class NewsController {
         for (let i = 0; i < pages; i++) {
             arrPages.push(i + 1)
         }
-        return res.render('news', {title: 'news', news: arr, pages: arrPages})
+        let limitNews = 3
+        let popularNews = await global.db.collection('news').find().sort({views: -1}).limit(limitNews).toArray()
+        popularNews.forEach(function (item) {
+            item.url = req._parsedOriginalUrl.pathname + '/' + item.key
+        })
+        return res.render('news', {title: 'news', news: arr, pages: arrPages, popularNews: popularNews})
     }
 
     static async getDetailNews(req, res) {
