@@ -1,6 +1,7 @@
 import {ObjectID} from "mongodb";
 
 export default class ProfileController {
+
     static async getProfile(req, res) {
         let profile = await global.db.collection('users').findOne({_id: new ObjectID(req.params.id)})
         if (profile) {
@@ -11,14 +12,13 @@ export default class ProfileController {
     }
 
     static async getDetailProfile(req, res) {
-        const body = req.body
+        // const body = req.body
         let profile = await global.db.collection('users').findOne()
         return res.render('profile', {title: 'Profile', profile: profile})
     }
 
     static async postDetailProfile(req, res) {
         const body = req.body
-        console.log(body)
         let errors = []
         let profile = await global.db.collection('users').findOne()
         if (!profile) {
@@ -50,8 +50,22 @@ export default class ProfileController {
                 }
             }
         }
+        if (body.name === undefined || body.name.length === 0) {
+            errors.push('Введите имя')
+        }
+        if (body.surname === undefined || body.surname.length === 0) {
+            errors.push('Введите фамилию')
+        }
+        if (body.image === undefined || body.image.length === 0) {
+            errors.push('Введите ссылку на фото')
+        }
+        try {
+            await axios.get(body.image)
+        } catch (e) {
+            errors.push('Ссылка недоступна')
+        }
         if (errors.length > 0) {
-            res.render('admin/profile/_id', {profile: profile, errors: errors})
+            return res.render('admin/profile/_id', {profile: profile, errors: errors})
         }
         await global.db.collection('users').update(
             {_id: new ObjectID(req.params.id)},
@@ -64,7 +78,7 @@ export default class ProfileController {
                 }
             },
         )
-        res.redirect('/profile')
+        return res.redirect('/profile')
     }
 }
 

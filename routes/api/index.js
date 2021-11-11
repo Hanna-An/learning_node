@@ -2,25 +2,24 @@ import express from 'express'
 
 let apiRoutes = express.Router()
 
-apiRoutes.get('/', async (req, res) => {
-    let arr = await global.db.collection('articles').find().toArray()
-    res.render('articles', {title: 'articles', articles: arr})
+apiRoutes.post('/signup', async (req, res) => {
+    // make validations
+    // name - >3, required
+    // email required mask, not dublicate in db
+    // password >3
+    // if have errors return {error: "err"}
+
+    // write logic
+
+    console.log(req.body)
+
+    await global.db.collection('users').insert({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password
+    })
+    res.send({success: true})
 })
-
-// apiRoutes.get('/cars', async (req, res) => {
-//     let arr = await global.db.collection('cars').find().toArray()
-//     res.render('cars', {title: 'cars', cars: arr})
-// })
-
-apiRoutes.get('/shops', async (req, res) => {
-    let arr = await global.db.collection('shops').find().toArray()
-    res.render('shops', {title: 'shops', shops: arr})
-})
-
-// apiRoutes.get('/news', async (req, res) => {
-//     let arr = await global.db.collection('news').find().toArray()
-//     res.render('news', {title: 'news', news: arr})
-// })
 
 apiRoutes.get('/news', async (req, res) => {
     let arr = await global.db.collection('news').find().toArray()
@@ -29,18 +28,17 @@ apiRoutes.get('/news', async (req, res) => {
 
 apiRoutes.get('/articles', async (req, res) => {
     let arr = await global.db.collection('articles').find().toArray()
-    res.render('articles', {title: 'articles', articles: arr})
+    res.send({articles: arr})
 })
 
-apiRoutes.get('/category', async (req, res) => {
-    let category = await global.db.collection('categories').find()
-    if (category) {
-        res.render('category')
-    } else {
-        throw new Error('404')
+apiRoutes.get('/articles/:key', async (req, res) => {
+    let articles = await global.db.collection('articles').findOne({key: req.params.key})
+    if (articles) {
+        res.send({articles: articles})
     }
 })
 
-// send
+
 
 export default apiRoutes
+

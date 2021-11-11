@@ -12,7 +12,7 @@ adminProfileRoutes
     .get('/profile', AdminProfileController.adminGetProfile)
 
 adminProfileRoutes
-    .get('/:id', AdminProfileController.getDetailProfile)
+    .get('/profile/:id', AdminProfileController.getDetailProfile)
 
 adminProfileRoutes
     .get('/profile', AdminProfileController.adminGetProfileSingle)
