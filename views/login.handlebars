@@ -11,29 +11,29 @@
     </div>
 </form>
 
-<script>
-    let telRe = /\+37529[0-9+]{7}/;
-    let emailRe = /^[\w-\.]+@[\w-]+\.[a-z]{2,4}$/i;
+<!--<script>-->
+<!--    let telRe = /\+37529[0-9+]{7}/;-->
+<!--    let emailRe = /^[\w-\.]+@[\w-]+\.[a-z]{2,4}$/i;-->
 
-    function checkForm(){
-        let errorPhoneMessage = "";
-        let errorEmailMessage = "";
-        let okMessage = "ok";
-        let form = document.getElementById('regForm')
-        let telValue = form.phone.value;
-        let emailValue = form.email.value;
-        if ( ! telRe.test(telValue)){
-            errorPhoneMessage = "Error: wrong phone";
-        }
-        if ( ! emailRe.test(emailValue)){
-            errorEmailMessage = "Error: wrong email";
-        }
-        if (errorEmailMessage){
-            alert(errorEmailMessage);
-        } else if (errorPhoneMessage){
-            alert(errorPhoneMessage);
-        } else {
-            alert(okMessage);
-        }
-    }
-</script>
+<!--    function checkForm(){-->
+<!--        let errorPhoneMessage = "";-->
+<!--        let errorEmailMessage = "";-->
+<!--        let okMessage = "ok";-->
+<!--        let form = document.getElementById('regForm')-->
+<!--        let telValue = form.phone.value;-->
+<!--        let emailValue = form.email.value;-->
+<!--        if ( ! telRe.test(telValue)){-->
+<!--            errorPhoneMessage = "Error: wrong phone";-->
+<!--        }-->
+<!--        if ( ! emailRe.test(emailValue)){-->
+<!--            errorEmailMessage = "Error: wrong email";-->
+<!--        }-->
+<!--        if (errorEmailMessage){-->
+<!--            alert(errorEmailMessage);-->
+<!--        } else if (errorPhoneMessage){-->
+<!--            alert(errorPhoneMessage);-->
+<!--        } else {-->
+<!--            alert(okMessage);-->
+<!--        }-->
+<!--    }-->
+<!--</script>-->

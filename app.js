@@ -9,8 +9,25 @@ import session from 'express-session'
 import passport from 'passport'
 import bodyParser from 'body-parser'
 import {Strategy} from 'passport-local'
+import swaggerJsdoc from 'swagger-jsdoc'
+import swaggerUi from 'swagger-ui-express'
 
+
+const options = {
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'Hello World 123',
+            version: '1.0.0',
+        },
+    },
+    apis: ['./routes/api/**/*.js'],
+}
+
+const swaggerSpec = swaggerJsdoc(options)
 const app = express()
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 const host = process.env.HOST || '127.0.0.1'
