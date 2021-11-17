@@ -103,7 +103,7 @@ app.post('/api/user', (req, res) => {
         //     res.send(b)
         // })
         //
-        // app.put('/api/ews/:title', async (req, res) => {
+        // app.put('/api/news/:title', async (req, res) => {
         //     const titleNews = req.params.title
         //     console.log(titleNews)
         //     let data = req.body
