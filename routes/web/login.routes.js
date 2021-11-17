@@ -7,7 +7,6 @@ loginRoutes
     .route('/')
     .get(LoginController.getLogin)
 
-loginRoutes
-    .post('/:key', LoginController.postLogin)
+    .post(LoginController.postLogin)
 
 export default loginRoutes
