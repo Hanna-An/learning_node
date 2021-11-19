@@ -17,13 +17,13 @@ export default class AdminCategoryController {
         arr.forEach(function (item) {
             item.url = req._parsedOriginalUrl.pathname + '/' + item.key
         })
-        return res.render('admin/category', {title: 'admin', category: arr})
+        return res.render('admin/categories', {title: 'admin', category: arr})
     }
 
     static async getDetailCategory(req, res) {
         let category = await global.db.collection('categories').findOne({key: req.params.key})
         if (category) {
-            return res.render('admin/category/_key', {category: category})
+            return res.render('admin/categories/_key', {category: category})
         } else {
             throw new Error('404')
         }
@@ -31,7 +31,7 @@ export default class AdminCategoryController {
 
     static async adminGetCategoryDelite(req, res) {
         await global.db.collection('categories').deleteOne({key: req.params.key})
-        return res.redirect('/admin/category')
+        return res.redirect('/admin/categories')
     }
 
 

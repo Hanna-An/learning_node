@@ -1,6 +1,6 @@
 import express from 'express'
 import bcrypt from 'bcrypt'
-import {ObjectID} from "mongodb";
+import {ObjectID} from "mongodb"
 
 let apiRoutes = express.Router()
 
@@ -192,7 +192,7 @@ apiRoutes.get('/articles/:key', async (req, res) => {
 
 /**
  * @openapi
- * /category:
+ * /categories:
  *  get:
  *      responses:
  *          "200":
@@ -200,8 +200,8 @@ apiRoutes.get('/articles/:key', async (req, res) => {
  *
  */
 
-apiRoutes.get('/category', async (req, res) => {
-    let arr = await global.db.collection('category').find().toArray()
+apiRoutes.get('/categories', async (req, res) => {
+    let arr = await global.db.collection('categories').find().toArray()
     res.send({data: arr})
 })
 
@@ -215,8 +215,8 @@ apiRoutes.get('/category', async (req, res) => {
  *
  */
 
-apiRoutes.get('/category/:key', async (req, res) => {
-    let category = await global.db.collection('category').findOne({key: req.params.key})
+apiRoutes.get('/categories/:key', async (req, res) => {
+    let category = await global.db.collection('categories').findOne({key: req.params.key})
     if (category) {
         res.json({data: category})
     } else {

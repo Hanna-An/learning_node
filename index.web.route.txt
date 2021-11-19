@@ -11,7 +11,7 @@ import crypto from 'crypto'
 import adminShopsRoutes from "./admin/shops.routes.js"
 import adminNewsRoutes from "./admin/news.routes.js"
 import adminArticlesRoutes from "./admin/articles.routes.js"
-import adminCategoryRoutes from "./admin/category.routes.js"
+import adminCategoryRoutes from "./admin/categories.routes.js"
 import adminProfileRoutes from "./admin/profile.routes.js"
 
 let storage = multer.diskStorage({
