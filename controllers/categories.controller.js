@@ -1,9 +1,9 @@
-export default class CategoryController {
+export default class CategoriesController {
 
     static async getCategory(req, res) {
         let category = await global.db.collection('categories').find()
         if (category) {
-            return res.render('category')
+            return res.render('categories')
         } else {
             throw new Error('404')
         }
@@ -16,7 +16,7 @@ export default class CategoryController {
             products.forEach(function (product) {
                 product.url = req._parsedOriginalUrl.path + '/' + product.key
             })
-            res.render('category/_key', {title: category.title, products: products})
+            res.render('categories/_key', {title: category.title, products: products})
         } else {
             throw new Error('404')
         }
@@ -30,7 +30,7 @@ export default class CategoryController {
                 key: req.params.key_product
             })
             if (product) {
-                res.render('category/_key_product', {title: category.title, product: product})
+                res.render('categories/_key_product', {title: category.title, product: product})
             } else {
                 throw new Error('404')
             }
