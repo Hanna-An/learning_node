@@ -11,6 +11,7 @@ import bodyParser from 'body-parser'
 import {Strategy} from 'passport-local'
 import swaggerJsdoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
+import cors from 'cors'
 
 
 const options = {
@@ -27,6 +28,7 @@ const options = {
 const swaggerSpec = swaggerJsdoc(options)
 const app = express()
 
+app.use(cors({origin: '*', optionsSuccessStatus: 200}))
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
