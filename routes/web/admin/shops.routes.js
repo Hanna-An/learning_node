@@ -1,5 +1,5 @@
 import express from 'express'
-import AdminShopsController from '../../../controllers/admin/shops.controller.js'
+import AdminShopsController from '../../../controllers/web/admin/shops.controller.js'
 import multer from 'multer'
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';

@@ -1,5 +1,5 @@
 import express from 'express'
-import AdminCategoryController from '../../../controllers/admin/categories.controller.js'
+import AdminCategoryController from '../../../controllers/web/admin/categories.controller.js'
 
 const adminCategoryRoutes = express.Router()
 
