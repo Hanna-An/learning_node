@@ -1,5 +1,5 @@
 import express from 'express'
-import AdminArticlesController from '../../../controllers/admin/articles.controller.js'
+import AdminArticlesController from '../../../controllers/web/admin/articles.controller.js'
 
 const adminArticlesRoutes = express.Router()
 

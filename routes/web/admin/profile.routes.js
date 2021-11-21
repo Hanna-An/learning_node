@@ -1,5 +1,5 @@
 import express from 'express'
-import AdminProfileController from '../../../controllers/admin/profile.controller.js'
+import AdminProfileController from '../../../controllers/web/admin/profile.controller.js'
 
 const adminProfileRoutes = express.Router()
 

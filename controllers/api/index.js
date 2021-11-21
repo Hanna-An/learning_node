@@ -218,12 +218,15 @@ apiRoutes.get('/categories', async (req, res) => {
 apiRoutes.get('/categories/:key', async (req, res) => {
     let category = await global.db.collection('categories').findOne({key: req.params.key})
     if (category) {
-        res.json({data: category})
+        let products = await global.db.collection('products').find({category_id: category._id}).toArray()
+        products.forEach(function (product) {
+            product.url = req._parsedOriginalUrl.path + '/' + product.key
+        })
+        res.json({data: products})
     } else {
-        res.json({error: 'category not exist'})
+        res.json({error: 'products not exist'})
     }
 })
-
 
 
 export default apiRoutes
