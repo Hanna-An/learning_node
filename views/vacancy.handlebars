@@ -1,0 +1,28 @@
+<div class="container p-4">
+      <div>
+        <a href="/" class="main">Главная</a>
+        <span class="main"> -> Вакансии</span>
+    </div>
+
+    <h1>{{{title}}}</h1>
+
+    {{#if vacancy}}
+        <ul>
+            {{#each vacancy}}
+              {{> vacancy-card }}
+            {{/each}}
+        </ul>
+    {{/if}}
+
+
+    <nav class="mt-4">
+      <ul class="pagination pagination-sm">
+        {{#each pages}}
+          <li class="page-item">
+            <a class="page-link" href="/vacancy?page={{this}}"> {{this}} </a>
+          </li>
+        {{/each}}
+      </ul>
+    </nav>
+
+</div>
