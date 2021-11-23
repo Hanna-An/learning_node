@@ -1,8 +1,20 @@
 import express from 'express'
 import bcrypt from 'bcrypt'
 import {ObjectID} from "mongodb"
+import multer from 'multer'
 
 let apiRoutes = express.Router()
+
+let storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, process.env.PWD + '/public/uploads')
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname)
+    }
+})
+let upload = multer({ storage: storage})
+
 
 /**
  * @openapi
@@ -22,9 +34,6 @@ let apiRoutes = express.Router()
  *                              type: string
  *                          password:
  *                              type: string
- *
- *
- *
  *
  */
 
@@ -56,7 +65,7 @@ apiRoutes.post('/signup', async (req, res) => {
         email: body.email,
         password: await bcrypt.hash(body.password, salt)
     })
-    res.send({success: true})
+    res.send({data: true})
 })
 
 /**
@@ -142,7 +151,7 @@ apiRoutes.post('/contacts', async (req, res) => {
             message: body.message
         }
     )
-    res.send({success: true})
+    res.send({data: true})
 
 })
 
@@ -238,9 +247,6 @@ apiRoutes.get('/categories/:key', async (req, res) => {
     let category = await global.db.collection('categories').findOne({key: req.params.key})
     if (category) {
         let products = await global.db.collection('products').find({category_id: category._id}).toArray()
-        products.forEach(function (product) {
-            product.url = req._parsedOriginalUrl.path + '/' + product.key
-        })
         res.json({data: products})
     } else {
         res.json({error: 'products not exist'})
@@ -248,43 +254,10 @@ apiRoutes.get('/categories/:key', async (req, res) => {
 })
 
 apiRoutes.get('/products/popular', async (req, res) => {
-    let category = await global.db.collection('categories').findOne({key: req.params.key})
-    if (category) {
         let limitProducts = 8
         let popularProducts = await global.db.collection('products').find().limit(limitProducts).toArray()
-        popularProducts.forEach(function (item) {
-            item.url = req._parsedOriginalUrl.pathname + '/' + item.key
-        })
         res.send({data: popularProducts})
-    }
 })
-
-
-// apiRoutes.get('/products/popular', async (req, res) => {
-//     let previous
-//     let current = req.params.key
-//     let next
-//     let products = await global.db.collection('products').findOne({key: current})
-//     if (products) {
-//         products.views = products.views === undefined ? 1 : ++products.views
-//         await global.db.collection('products').update({_id: products._id}, {$set: {views: products.views}})
-//         let arr = await global.db.collection('products').find({}).sort({key: 1}).toArray()
-//         if (arr) {
-//             for (let i = 0; i < arr.length; i++) {
-//                 if (arr[i].key === current) {
-//                     if (arr[i + 1]) {
-//                         next = arr[i + 1]
-//                     }
-//                     break
-//                 }
-//                 previous = arr[i]
-//             }
-//             return res.send({products: products, previous: previous, next: next})
-//         } else {
-//             throw new Error('404')
-//         }
-//     }
-// })
 
 /**
  * @openapi
@@ -322,6 +295,11 @@ apiRoutes.get('/vacancies/:key', async (req, res) => {
     } else {
         res.send({error: 'vacancy not exist'})
     }
+})
+
+apiRoutes.post('/file', upload.single('file'), async (req, res) => {
+    console.log(req.file)
+    res.send({data: 123})
 })
 
 
