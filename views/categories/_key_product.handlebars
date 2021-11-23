@@ -13,17 +13,3 @@
   </div>
 </div>
 
-<aside>
-    <span>Популярные товары:</span>
-    {{#if popularProducts}}
-        <ul>
-            {{#each popularProducts}}
-                <li class="news_title">
-                    <a href="{{this.url}}">{{this.title}}</a>
-                    <a href="{{this.url}}">{{this.preview_img}}</a>
-                    <a href="{{this.url}}">{{this.price}}</a>
-                </li>
-            {{/each}}
-        </ul>
-    {{/if}}
-</aside>
