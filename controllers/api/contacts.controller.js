@@ -1,25 +1,4 @@
 
-/**
- * @openapi
- * /contacts:
- *  post:
- *      tags:
- *      - name: "contacts"
- *      requestBody:
- *          content:
- *               'application/json':
- *                  schema:
- *                      type: object
- *                      properties:
- *                          name:
- *                              type: string
- *                          email:
- *                              type: string
- *                          message:
- *                              type: string
- *
- */
-
 export default class ContactsController {
     static async postContacts(req, res) {
         const body = req.body

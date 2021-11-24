@@ -13,6 +13,7 @@ import categoriesRoutes from './categories.routes.js'
 import productsRoutes from './products.routes.js'
 import vacanciesRoutes from './vacancies.routes.js'
 import fileRoutes from './file.routes.js'
+import adminArticlesRoutes from "./admin/articles.routes.js"
 
 let apiRoutes = express.Router()
 
@@ -26,6 +27,8 @@ apiRoutes.use('/categories', categoriesRoutes)
 apiRoutes.use('/products', productsRoutes)
 apiRoutes.use('/vacancies', vacanciesRoutes)
 apiRoutes.use('/file', fileRoutes)
+apiRoutes.use('/admin', adminArticlesRoutes)
+
 
 
 let storage = multer.diskStorage({

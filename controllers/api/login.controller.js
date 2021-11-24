@@ -1,24 +1,5 @@
 import bcrypt from "bcrypt";
 
-/**
- * @openapi
- * /login:
- *  post:
- *      tags:
- *      - name: "login"
- *      requestBody:
- *          content:
- *               'application/json':
- *                  schema:
- *                      type: object
- *                      properties:
- *                          email:
- *                              type: string
- *                          password:
- *                              type: string
- *
- */
-
 export default class LoginController {
     static async postLogin(req, res) {
         const body = req.body;
