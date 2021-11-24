@@ -1,26 +1,5 @@
 import bcrypt from "bcrypt";
 
-/**
- * @openapi
- * /signup:
- *  post:
- *      tags:
- *      - name: "signup"
- *      requestBody:
- *          content:
- *              'application/json':
- *                  schema:
- *                      type: object
- *                      properties:
- *                          name:
- *                              type: string
- *                          email:
- *                              type: string
- *                          password:
- *                              type: string
- *
- */
-
 export default class SignupController {
     static async postSignup(req, res) {
         const body = req.body
@@ -35,7 +14,7 @@ export default class SignupController {
         if (body.name === undefined || body.name.length < 3) {
             errors.push('Имя не должно быть короче 3 символов')
         }
-        if (body.email === undefined) {
+        if (email === undefined) {
             errors.push('Введите email')
         }
         if (!emailRe.test(email)) {
