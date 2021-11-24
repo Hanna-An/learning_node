@@ -17,7 +17,6 @@ import bcrypt from "bcrypt";
 
 let webRoutes = express.Router()
 
-webRoutes.use('/products/popular', homeRoutes)
 webRoutes.use('/categories', categoriesRoutes)
 webRoutes.use('/profile', profileRoutes)
 webRoutes.use('/signup', signupRoutes)

@@ -3,7 +3,30 @@ import bcrypt from 'bcrypt'
 import {ObjectID} from "mongodb"
 import multer from 'multer'
 
+import signupRoutes from './signup.routes.js'
+import loginRoutes from './login.routes.js'
+import contactsRoutes from './contacts.routes.js'
+import searchRoutes from './search.routes.js'
+import newsRoutes from './news.routes.js'
+import articlesRoutes from './articles.routes.js'
+import categoriesRoutes from './categories.routes.js'
+import productsRoutes from './products.routes.js'
+import vacanciesRoutes from './vacancies.routes.js'
+import fileRoutes from './file.routes.js'
+
 let apiRoutes = express.Router()
+
+apiRoutes.use('/signup', signupRoutes)
+apiRoutes.use('/login', loginRoutes)
+apiRoutes.use('/contacts', contactsRoutes)
+apiRoutes.use('/search', searchRoutes)
+apiRoutes.use('/news', newsRoutes)
+apiRoutes.use('/articles', articlesRoutes)
+apiRoutes.use('/categories', categoriesRoutes)
+apiRoutes.use('/products', productsRoutes)
+apiRoutes.use('/vacancies', vacanciesRoutes)
+apiRoutes.use('/file', fileRoutes)
+
 
 let storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -16,291 +39,290 @@ let storage = multer.diskStorage({
 let upload = multer({ storage: storage})
 
 
-/**
- * @openapi
- * /signup:
- *  post:
- *      tags:
- *      - name: "signup"
- *      requestBody:
- *          content:
- *              'application/json':
- *                  schema:
- *                      type: object
- *                      properties:
- *                          name:
- *                              type: string
- *                          email:
- *                              type: string
- *                          password:
- *                              type: string
- *
- */
+// /**
+//  * @openapi
+//  * /signup:
+//  *  post:
+//  *      tags:
+//  *      - name: "signup"
+//  *      requestBody:
+//  *          content:
+//  *              'application/json':
+//  *                  schema:
+//  *                      type: object
+//  *                      properties:
+//  *                          name:
+//  *                              type: string
+//  *                          email:
+//  *                              type: string
+//  *                          password:
+//  *                              type: string
+//  *
+//  */
+//
+// apiRoutes.post('/signup', async (req, res) => {
+//     const body = req.body
+//     let errors = []
+//     const salt = await bcrypt.genSalt(10)
+//     let emailRe = /^[\w-\.]+@[\w-]+\.[a-z]{2,4}$/i
+//     let emailValue = body.email
+//     if (body.name === undefined || body.name.length < 3) {
+//         errors.push('Имя не должно быть короче 3 символов')
+//     }
+//     if (body.email === undefined) {
+//         errors.push('Введите email')
+//     }
+//     if (!emailRe.test(emailValue)) {
+//         errors.push('Введите корректный email')
+//     }
+//     if (body.password === undefined || body.password.length < 3) {
+//         errors.push('Пароль должен содержать не менее 3 символов')
+//     }
+//     if (errors.length > 0) {
+//         res.send({errors: errors})
+//         return
+//     }
+//     console.log(req.body)
+//     await global.db.collection('users').insert({
+//         name: body.name,
+//         email: body.email,
+//         password: await bcrypt.hash(body.password, salt)
+//     })
+//     res.send({data: true})
+// })
 
-apiRoutes.post('/signup', async (req, res) => {
-    const body = req.body
-    let errors = []
-    const salt = await bcrypt.genSalt(10)
-    let emailRe = /^[\w-\.]+@[\w-]+\.[a-z]{2,4}$/i
-    let emailValue = body.email
-    if (body.name === undefined || body.name.length < 3) {
-        errors.push('Имя не должно быть короче 3 символов')
-    }
-    if (body.email === undefined) {
-        errors.push('Введите email')
-    }
-    if (!emailRe.test(emailValue)) {
-        errors.push('Введите корректный email')
-    }
-    if (body.password === undefined || body.password.length < 3) {
-        errors.push('Пароль должен содержать не менее 3 символов')
-    }
-    if (errors.length > 0) {
-        res.send({errors: errors})
-        return
-    }
-    console.log(req.body)
-    await global.db.collection('users').insert({
-        name: body.name,
-        email: body.email,
-        password: await bcrypt.hash(body.password, salt)
-    })
-    res.send({data: true})
-})
+// /**
+//  * @openapi
+//  * /login:
+//  *  post:
+//  *      tags:
+//  *      - name: "login"
+//  *      requestBody:
+//  *          content:
+//  *               'application/json':
+//  *                  schema:
+//  *                      type: object
+//  *                      properties:
+//  *                          email:
+//  *                              type: string
+//  *                          password:
+//  *                              type: string
+//  *
+//  */
 
-/**
- * @openapi
- * /login:
- *  post:
- *      tags:
- *      - name: "login"
- *      requestBody:
- *          content:
- *               'application/json':
- *                  schema:
- *                      type: object
- *                      properties:
- *                          email:
- *                              type: string
- *                          password:
- *                              type: string
- *
- */
+// apiRoutes.post('/login', async (req, res) => {
+//     const body = req.body;
+//     const user = await global.db.collection('users').findOne({email: body.email})
+//     if (user) {
+//         const validPassword = await bcrypt.compare(body.password, user.password)
+//         if (validPassword) {
+//             res.status(200).json({message: "Valid password"})
+//         } else {
+//             res.status(400).json({error: "Invalid Password"})
+//         }
+//     } else {
+//         res.status(401).json({error: "User does not exist"})
+//     }
+// })
 
-apiRoutes.post('/login', async (req, res) => {
-    const body = req.body;
-    const user = await global.db.collection('users').findOne({email: body.email})
-    if (user) {
-        const validPassword = await bcrypt.compare(body.password, user.password)
-        if (validPassword) {
-            res.status(200).json({message: "Valid password"})
-        } else {
-            res.status(400).json({error: "Invalid Password"})
-        }
-    } else {
-        res.status(401).json({error: "User does not exist"})
-    }
-})
+// /**
+//  * @openapi
+//  * /contacts:
+//  *  post:
+//  *      tags:
+//  *      - name: "contacts"
+//  *      requestBody:
+//  *          content:
+//  *               'application/json':
+//  *                  schema:
+//  *                      type: object
+//  *                      properties:
+//  *                          name:
+//  *                              type: string
+//  *                          email:
+//  *                              type: string
+//  *                          message:
+//  *                              type: string
+//  *
+//  */
+//
+// apiRoutes.post('/contacts', async (req, res) => {
+//     const body = req.body
+//     let errors = []
+//     let emailRe = /^[\w-\.]+@[\w-]+\.[a-z]{2,4}$/i
+//     let emailValue = body.email
+//     if (body.name === undefined || body.name.length < 3) {
+//         errors.push('Имя не должно быть короче 3 символов')
+//     }
+//     if (!emailRe.test(emailValue)) {
+//         errors.push('Введите корректный email')
+//     }
+//     if (body.email === undefined) {
+//         errors.push('Введите email')
+//     }
+//     if (body.message === undefined || body.message.length === 0) {
+//         errors.push('Введите сообщение')
+//     }
+//     if (errors.length > 0) {
+//         res.send({errors: errors})
+//         return
+//     }
+//     await global.db.collection('contacts').insert(
+//         {
+//             name: body.name,
+//             email: body.email,
+//             message: body.message
+//         }
+//     )
+//     res.send({data: true})
+// })
 
-/**
- * @openapi
- * /contacts:
- *  post:
- *      tags:
- *      - name: "contacts"
- *      requestBody:
- *          content:
- *               'application/json':
- *                  schema:
- *                      type: object
- *                      properties:
- *                          name:
- *                              type: string
- *                          email:
- *                              type: string
- *                          message:
- *                              type: string
- *
- */
+// apiRoutes.get('/search', async (req, res) => {
+//     res.send({data: []})
+// })
 
-apiRoutes.post('/contacts', async (req, res) => {
-    const body = req.body
-    let errors = []
-    let emailRe = /^[\w-\.]+@[\w-]+\.[a-z]{2,4}$/i
-    let emailValue = body.email
-    if (body.name === undefined || body.name.length < 3) {
-        errors.push('Имя не должно быть короче 3 символов')
-    }
-    if (!emailRe.test(emailValue)) {
-        errors.push('Введите корректный email')
-    }
-    if (body.email === undefined) {
-        errors.push('Введите email')
-    }
-    if (body.message === undefined || body.message.length === 0) {
-        errors.push('Введите сообщение')
-    }
-    if (errors.length > 0) {
-        res.send({errors: errors})
-        return
-    }
-    await global.db.collection('contacts').insert(
-        {
-            name: body.name,
-            email: body.email,
-            message: body.message
-        }
-    )
-    res.send({data: true})
+// /**
+//  * @openapi
+//  * /news:
+//  *  get:
+//  *      tags:
+//  *      - name: "news"
+//  *      responses:
+//  *          "200":
+//  *              description: "successful operation"
+//  *
+//  */
 
-})
+// apiRoutes.get('/news', async (req, res) => {
+//     let arr = await global.db.collection('news').find().toArray()
+//     res.send({data: arr})
+// })
 
-apiRoutes.get('/search', async (req, res) => {
-    res.send({data: []})
-})
+// /**
+//  * @openapi
+//  * /articles:
+//  *  get:
+//  *      tags:
+//  *      - name: "articles"
+//  *      responses:
+//  *          "200":
+//  *              description: "successful operation"
+//  *
+//  */
+//
+// apiRoutes.get('/articles', async (req, res) => {
+//     let arr = await global.db.collection('articles').find().toArray()
+//     res.send({data: arr})
+// })
+//
+// /**
+//  * @openapi
+//  * /articles/{:articlesKey}:
+//  *  get:
+//  *      tags:
+//  *      - name: "articles/{:articlesKey}"
+//  *      responses:
+//  *          "200":
+//  *              description: "successful operation"
+//  *
+//  */
+//
+// apiRoutes.get('/articles/:key', async (req, res) => {
+//     let article = await global.db.collection('articles').findOne({key: req.params.key})
+//     if (article) {
+//         res.send({data: article})
+//     } else {
+//         res.send({error: 'article not exist'})
+//     }
+// })
 
-/**
- * @openapi
- * /news:
- *  get:
- *      tags:
- *      - name: "news"
- *      responses:
- *          "200":
- *              description: "successful operation"
- *
- */
+// /**
+//  * @openapi
+//  * /categories:
+//  *  get:
+//  *      tags:
+//  *      - name: "categories"
+//  *      responses:
+//  *          "200":
+//  *              description: "successful operation"
+//  *
+//  */
+//
+// apiRoutes.get('/categories', async (req, res) => {
+//     let arr = await global.db.collection('categories').find().toArray()
+//     res.send({data: arr})
+// })
+//
+// /**
+//  * @openapi
+//  * /categories/{:categoryKey}:
+//  *  get:
+//  *      tags:
+//  *      - name: "categories/{:categoryKey}"
+//  *      responses:
+//  *          "200":
+//  *              description: "successful operation"
+//  *
+//  */
+//
+// apiRoutes.get('/categories/:key', async (req, res) => {
+//     let category = await global.db.collection('categories').findOne({key: req.params.key})
+//     if (category) {
+//         let products = await global.db.collection('products').find({category_id: category._id}).toArray()
+//         res.json({data: products})
+//     } else {
+//         res.json({error: 'products not exist'})
+//     }
+// })
 
-apiRoutes.get('/news', async (req, res) => {
-    let arr = await global.db.collection('news').find().toArray()
-    res.send({data: arr})
-})
+// apiRoutes.get('/products/popular', async (req, res) => {
+//         let limitProducts = 8
+//         let popularProducts = await global.db.collection('products').find().limit(limitProducts).toArray()
+//         res.send({data: popularProducts})
+// })
 
-/**
- * @openapi
- * /articles:
- *  get:
- *      tags:
- *      - name: "articles"
- *      responses:
- *          "200":
- *              description: "successful operation"
- *
- */
+// /**
+//  * @openapi
+//  * /vacancies:
+//  *  get:
+//  *      tags:
+//  *      - name: "vacancies"
+//  *      responses:
+//  *          "200":
+//  *              description: "successful operation"
+//  *
+//  */
+//
+// apiRoutes.get('/vacancies', async (req, res) => {
+//     let arr = await global.db.collection('vacancies').find().toArray()
+//     res.send({data: arr})
+// })
+//
+// /**
+//  * @openapi
+//  * /vacancies/{:vacancyKey}:
+//  *  get:
+//  *      tags:
+//  *      - name: "vacancies/{:vacancyKey}"
+//  *      responses:
+//  *          "200":
+//  *              description: "successful operation"
+//  *
+//  */
+//
+// apiRoutes.get('/vacancies/:key', async (req, res) => {
+//     let vacancy = await global.db.collection('vacancies').findOne({key: req.params.key})
+//     if (vacancy) {
+//         res.send({data: vacancy})
+//     } else {
+//         res.send({error: 'vacancy not exist'})
+//     }
+// })
 
-apiRoutes.get('/articles', async (req, res) => {
-    let arr = await global.db.collection('articles').find().toArray()
-    res.send({data: arr})
-})
-
-/**
- * @openapi
- * /articles/{:articlesKey}:
- *  get:
- *      tags:
- *      - name: "articles/{:articlesKey}"
- *      responses:
- *          "200":
- *              description: "successful operation"
- *
- */
-
-apiRoutes.get('/articles/:key', async (req, res) => {
-    let article = await global.db.collection('articles').findOne({key: req.params.key})
-    if (article) {
-        res.send({data: article})
-    } else {
-        res.send({error: 'article not exist'})
-    }
-})
-
-/**
- * @openapi
- * /categories:
- *  get:
- *      tags:
- *      - name: "categories"
- *      responses:
- *          "200":
- *              description: "successful operation"
- *
- */
-
-apiRoutes.get('/categories', async (req, res) => {
-    let arr = await global.db.collection('categories').find().toArray()
-    res.send({data: arr})
-})
-
-/**
- * @openapi
- * /categories/{:categoryKey}:
- *  get:
- *      tags:
- *      - name: "categories/{:categoryKey}"
- *      responses:
- *          "200":
- *              description: "successful operation"
- *
- */
-
-apiRoutes.get('/categories/:key', async (req, res) => {
-    let category = await global.db.collection('categories').findOne({key: req.params.key})
-    if (category) {
-        let products = await global.db.collection('products').find({category_id: category._id}).toArray()
-        res.json({data: products})
-    } else {
-        res.json({error: 'products not exist'})
-    }
-})
-
-apiRoutes.get('/products/popular', async (req, res) => {
-        let limitProducts = 8
-        let popularProducts = await global.db.collection('products').find().limit(limitProducts).toArray()
-        res.send({data: popularProducts})
-})
-
-/**
- * @openapi
- * /vacancies:
- *  get:
- *      tags:
- *      - name: "vacancies"
- *      responses:
- *          "200":
- *              description: "successful operation"
- *
- */
-
-apiRoutes.get('/vacancies', async (req, res) => {
-    let arr = await global.db.collection('vacancies').find().toArray()
-    res.send({data: arr})
-})
-
-/**
- * @openapi
- * /vacancies/{:vacancyKey}:
- *  get:
- *      tags:
- *      - name: "vacancies/{:vacancyKey}"
- *      responses:
- *          "200":
- *              description: "successful operation"
- *
- */
-
-apiRoutes.get('/vacancies/:key', async (req, res) => {
-    let vacancy = await global.db.collection('vacancies').findOne({key: req.params.key})
-    if (vacancy) {
-        res.send({data: vacancy})
-    } else {
-        res.send({error: 'vacancy not exist'})
-    }
-})
-
-apiRoutes.post('/file', upload.single('file'), async (req, res) => {
-    console.log(req.file)
-    res.send({data: 123})
-})
+// apiRoutes.post('/file', upload.single('file'), async (req, res) => {
+//     console.log(req.file)
+//     res.send({data: 123})
+// })
 
 
 export default apiRoutes
