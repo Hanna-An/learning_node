@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb"
 
 export default class CategoriesController {
 
@@ -7,7 +8,7 @@ export default class CategoriesController {
     }
 
     static async getDetailCategories(req, res) {
-        let category = await global.db.collection('categories').findOne({key: req.params.key})
+        let category = await global.db.collection('categories').findOne({_id: new ObjectId(req.params.id)})
         if (category) {
             let products = await global.db.collection('products').find({category_id: category._id}).toArray()
             res.json({data: products})

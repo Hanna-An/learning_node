@@ -19,19 +19,7 @@ categoriesRoutes
     .route('/')
     .get(CategoriesController.getCategories)
 
-/**
- * @openapi
- * /categories/{:categoryKey}:
- *  get:
- *      tags:
- *      - name: "categories/{:categoryKey}"
- *      responses:
- *          "200":
- *              description: "successful operation"
- *
- */
-
 categoriesRoutes
-    .get('/:key', CategoriesController.getDetailCategories)
+    .get('/:id', CategoriesController.getDetailCategories)
 
 export default categoriesRoutes

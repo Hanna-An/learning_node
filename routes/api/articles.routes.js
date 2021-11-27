@@ -19,18 +19,6 @@ articlesRoutes
     .route('/')
     .get(ArticlesController.getArticles)
 
-/**
- * @openapi
- * /articles/{:articlesKey}:
- *  get:
- *      tags:
- *      - name: "articles/{:articlesKey}"
- *      responses:
- *          "200":
- *              description: "successful operation"
- *
- */
-
 articlesRoutes
     .get('/:key', ArticlesController.getDetailArticles)
 

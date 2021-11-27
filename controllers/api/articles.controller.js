@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb"
 
 export default class ArticlesController {
     static async getArticles(req, res) {
@@ -6,7 +7,7 @@ export default class ArticlesController {
     }
 
     static async getDetailArticles(req, res) {
-        let article = await global.db.collection('articles').findOne({key: req.params.key})
+        let article = await global.db.collection('articles').findOne({_id: new ObjectId(req.params.id)})
         if (article) {
             res.send({data: article})
         } else {
