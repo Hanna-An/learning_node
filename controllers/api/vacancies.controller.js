@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb"
 
 export default class VacanciesController {
     static async getVacancies(req, res) {
@@ -6,7 +7,7 @@ export default class VacanciesController {
     }
 
     static async getDetailVacancies(req, res) {
-        let vacancy = await global.db.collection('vacancies').findOne({key: req.params.key})
+        let vacancy = await global.db.collection('vacancies').findOne({_id: new ObjectId(req.params.id)})
         if (vacancy) {
             res.send({data: vacancy})
         } else {

@@ -1,5 +1,6 @@
-import crypto from "crypto";
-import axios from "axios";
+import crypto from "crypto"
+import axios from "axios"
+import {ObjectId} from "mongodb"
 
 export default class AdminArticlesController {
 
@@ -8,12 +9,7 @@ export default class AdminArticlesController {
         return res.send({data: arr})
     }
 
-    static async adminGetArticles(req, res) {
-        let articles = await global.db.collection('articles').find().toArray()
-        return res.render({data: articles})
-    }
-
-    static async adminPostArticlesAdd(req, res) {
+    static async adminCreateArticle(req, res) {
         const body = req.body
         await global.db.collection('articles').insert({
             title: body.title,
@@ -24,10 +20,10 @@ export default class AdminArticlesController {
         return res.send({data: true})
     }
 
-    static async adminPostArticlesEdit(req, res) {
+    static async adminArticleEdit(req, res) {
         const body = req.body
         let errors = []
-        let articles = await global.db.collection('articles').findOne({key: req.params.key})
+        let articles = await global.db.collection('articles').findOne({_id: new ObjectId(req.params.id)})
         if (!articles) {
             throw new Error('404')
         }
@@ -49,7 +45,7 @@ export default class AdminArticlesController {
             return res.send({data: true})
         }
         await global.db.collection('articles').update(
-            {key: req.params.key},
+            {_id: new ObjectId(req.params.id)},
             {
                 $set: {
                     title: body.title,
@@ -62,18 +58,17 @@ export default class AdminArticlesController {
         return res.send({data: true})
     }
 
-    static async adminGetArticlesEdit(req, res) {
-        let articles = await global.db.collection('articles').findOne({key: req.params.key})
-        console.log(articles)
+    static async adminGetArticle(req, res) {
+        let articles = await global.db.collection('articles').findOne({_id: new ObjectId(req.params.id)})
         if (articles) {
-            return res.render({data: articles})
+            return res.send({data: articles})
         } else {
             throw new Error('404')
         }
     }
 
-    static async adminGetArticlesDelite(req, res) {
-        await global.db.collection('articles').deleteOne({key: req.params.key})
+    static async adminArticlesDelite(req, res) {
+        await global.db.collection('articles').deleteOne({_id: new ObjectId(req.params.id)})
         return res.send({data: true})
     }
 }

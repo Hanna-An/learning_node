@@ -28,7 +28,7 @@ export default class ContactsController {
                 message: body.message
             }
         )
-        res.send({data: true})
+        res.json({data: true})
     }
 }
 

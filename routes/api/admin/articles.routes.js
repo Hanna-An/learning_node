@@ -8,18 +8,15 @@ adminArticlesRoutes
     .get(AdminArticlesController.adminArticles)
 
 adminArticlesRoutes
-    .get('/articles', AdminArticlesController.adminGetArticles)
+    .post('/articles', AdminArticlesController.adminCreateArticle)
 
 adminArticlesRoutes
-    .post('/articles/add', AdminArticlesController.adminPostArticlesAdd)
+    .put('/articles/:id', AdminArticlesController.adminArticleEdit)
 
 adminArticlesRoutes
-    .post('/articles/:key/edit', AdminArticlesController.adminPostArticlesEdit)
+    .get('/articles/:id', AdminArticlesController.adminGetArticle)
 
 adminArticlesRoutes
-    .get('/articles/:key/edit', AdminArticlesController.adminGetArticlesEdit)
-
-adminArticlesRoutes
-    .get('/articles/:key/delete', AdminArticlesController.adminGetArticlesDelite)
+    .delete('/articles/:id', AdminArticlesController.adminArticlesDelite)
 
 export default adminArticlesRoutes

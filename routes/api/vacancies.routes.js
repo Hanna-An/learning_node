@@ -19,19 +19,7 @@ vacanciesRoutes
     .route('/')
     .get(VacanciesController.getVacancies)
 
-/**
- * @openapi
- * /vacancies/{:vacancyKey}:
- *  get:
- *      tags:
- *      - name: "vacancies/{:vacancyKey}"
- *      responses:
- *          "200":
- *              description: "successful operation"
- *
- */
-
 vacanciesRoutes
-    .get('/:key', VacanciesController.getDetailVacancies)
+    .get('/:id', VacanciesController.getDetailVacancies)
 
 export default vacanciesRoutes
