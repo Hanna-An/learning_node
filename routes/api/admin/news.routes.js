@@ -1,11 +1,11 @@
 import express from 'express'
-import AdminArticlesController from '../../../controllers/api/admin/articles.controller.js'
+import AdminNewsController from '../../../controllers/api/admin/news.controller.js'
 
-const adminArticlesRoutes = express.Router()
+const adminNewsRoutes = express.Router()
 
 /**
  * @openapi
- * /articles:
+ * /news:
  *  get:
  *      tags:
  *      - name: "admin"
@@ -15,16 +15,16 @@ const adminArticlesRoutes = express.Router()
  *
  */
 
-adminArticlesRoutes
+adminNewsRoutes
     .route('/')
-    .get(AdminArticlesController.adminArticles)
+    .get(AdminNewsController.adminNews)
 
-adminArticlesRoutes
-    .get('/articles/:id', AdminArticlesController.adminGetArticle)
+adminNewsRoutes
+    .get('/news/:id', AdminNewsController.adminGetNews)
 
 /**
  * @openapi
- * /articles:
+ * /news:
  *  post:
  *      tags:
  *      - name: "admin"
@@ -45,12 +45,12 @@ adminArticlesRoutes
  *
  */
 
-adminArticlesRoutes
-    .post('/articles', AdminArticlesController.adminCreateArticle)
+adminNewsRoutes
+    .post('/news', AdminNewsController.adminCreateNews)
 
 /**
  * @openapi
- * /articles:
+ * /news:
  *  put:
  *      tags:
  *      - name: "admin"
@@ -71,19 +71,19 @@ adminArticlesRoutes
  *
  */
 
-adminArticlesRoutes
-    .put('/articles/:id', AdminArticlesController.adminArticleEdit)
+adminNewsRoutes
+    .put('/news/:id', AdminNewsController.adminNewsEdit)
 
 /**
  * @openapi
- * /articles/:id:
+ * /news:
  *  delete:
  *      tags:
  *      - name: "admin"
  *
  */
 
-adminArticlesRoutes
-    .delete('/articles/:id', AdminArticlesController.adminArticlesDelite)
+adminNewsRoutes
+    .delete('/news/:id', AdminNewsController.adminNewsDelete)
 
-export default adminArticlesRoutes
+export default adminNewsRoutes

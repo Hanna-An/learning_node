@@ -9,6 +9,15 @@ export default class AdminArticlesController {
         return res.send({data: arr})
     }
 
+    static async adminGetArticle(req, res) {
+        let articles = await global.db.collection('articles').findOne({_id: new ObjectId(req.params.id)})
+        if (articles) {
+            return res.send({data: articles})
+        } else {
+            throw new Error('404')
+        }
+    }
+
     static async adminCreateArticle(req, res) {
         const body = req.body
         await global.db.collection('articles').insert({
@@ -56,15 +65,6 @@ export default class AdminArticlesController {
             },
         )
         return res.send({data: true})
-    }
-
-    static async adminGetArticle(req, res) {
-        let articles = await global.db.collection('articles').findOne({_id: new ObjectId(req.params.id)})
-        if (articles) {
-            return res.send({data: articles})
-        } else {
-            throw new Error('404')
-        }
     }
 
     static async adminArticlesDelite(req, res) {
