@@ -14,6 +14,11 @@ export default class VacanciesController {
             res.send({error: 'vacancy not exist'})
         }
     }
+
+    static async vacancyDelete(req, res) {
+        await global.db.collection('vacancies').deleteOne({_id: new ObjectId(req.params.id)})
+        res.send({data: true})
+    }
 }
 
 

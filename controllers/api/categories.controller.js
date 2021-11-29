@@ -16,6 +16,11 @@ export default class CategoriesController {
             res.json({error: 'products not exist'})
         }
     }
+
+    static async categoryDelete(req, res) {
+        await global.db.collection('categories').deleteOne({_id: new ObjectId(req.params.id)})
+        res.send({data: true})
+    }
 }
 
 

@@ -22,4 +22,16 @@ categoriesRoutes
 categoriesRoutes
     .get('/:id', CategoriesController.getDetailCategories)
 
+/**
+ * @openapi
+ * /categories/:id:
+ *  delete:
+ *      tags:
+ *      - name: "categories"
+ *
+ */
+
+categoriesRoutes
+    .delete('/categories/:id', CategoriesController.categoryDelete)
+
 export default categoriesRoutes

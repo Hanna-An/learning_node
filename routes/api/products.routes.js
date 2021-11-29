@@ -22,4 +22,17 @@ productsRoutes
 productsRoutes
     .get('/:id', ProductsController.getDetailProducts)
 
+/**
+ * @openapi
+ * /products/:id:
+ *  delete:
+ *      tags:
+ *      - name: "admin"
+ *
+ */
+
+productsRoutes
+    .delete('/products/:id', ProductsController.productDelete)
+
+
 export default productsRoutes

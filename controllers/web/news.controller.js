@@ -17,10 +17,7 @@ export default class NewsController {
         }
         let limitNews = 3
         let popularNews = await global.db.collection('news').find().sort({views: -1}).limit(limitNews).toArray()
-        popularNews.forEach(function (item) {
-            item.url = req._parsedOriginalUrl.pathname + '/' + item.key
-        })
-        return res.render('news', {title: 'news', news: arr, pages: arrPages, popularNews: popularNews})
+        res.render({data: popularNews})
     }
 
     static async getDetailNews(req, res) {
@@ -42,7 +39,7 @@ export default class NewsController {
                     }
                     previous = arr[i]
                 }
-                return res.render('news/_key', {news: news, previous: previous, next: next})
+                res.render('news/_key', {news: news, previous: previous, next: next})
             } else {
                 throw new Error('404')
             }
