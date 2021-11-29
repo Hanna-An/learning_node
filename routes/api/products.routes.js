@@ -27,7 +27,7 @@ productsRoutes
  * /products/:id:
  *  delete:
  *      tags:
- *      - name: "admin"
+ *      - name: "products"
  *
  */
 

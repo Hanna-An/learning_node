@@ -27,7 +27,7 @@ vacanciesRoutes
  * /vacancies/:id:
  *  delete:
  *      tags:
- *      - name: "admin"
+ *      - name: "vacancies"
  *
  */
 
