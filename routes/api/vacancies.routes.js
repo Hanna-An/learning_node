@@ -22,4 +22,17 @@ vacanciesRoutes
 vacanciesRoutes
     .get('/:id', VacanciesController.getDetailVacancies)
 
+/**
+ * @openapi
+ * /vacancies/:id:
+ *  delete:
+ *      tags:
+ *      - name: "vacancies"
+ *
+ */
+
+vacanciesRoutes
+    .delete('/vacancies/:id', VacanciesController.vacancyDelete)
+
+
 export default vacanciesRoutes

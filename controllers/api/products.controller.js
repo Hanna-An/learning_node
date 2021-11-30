@@ -15,6 +15,10 @@ export default class ProductsController {
             res.send({error: 'product not exist'})
         }
     }
+    static async productDelete(req, res) {
+        await global.db.collection('products').deleteOne({_id: new ObjectId(req.params.id)})
+        res.send({data: true})
+    }
 }
 
 
